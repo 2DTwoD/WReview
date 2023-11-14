@@ -9,4 +9,5 @@ public class AuthController {
     public String login(){
         return "auth/login";
     }
+
 }
