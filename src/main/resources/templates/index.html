@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Главная страница</title>
+    <title>Лучший работник</title>
 </head>
 <body>
-    опа гангнамстайл
-</body>
+<div th:each="person : ${persons}">
+    <a th:href="@{/person/{name}/edit(name=${person.getUsername()})}"
+       th:text="${person.getUsername() + ', ' + person.getServiceDescription() + ', ' + person.getRating()}"></a>
+</div>
+
 <form th:action="@{/logout}" th:method="POST">
     <input type="submit" value="Logout" />
 </form>
-<a th:href="@{/auth/registration}">Регистрация</a>
+<a th:href="@{/registration}">Регистрация</a>
+</body>
 </html>

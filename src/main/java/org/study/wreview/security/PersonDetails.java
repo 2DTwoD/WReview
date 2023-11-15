@@ -1,33 +1,31 @@
 package org.study.wreview.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.study.wreview.models.Caller;
+import org.study.wreview.models.Person;
 
 import java.util.Collection;
 import java.util.Collections;
+@RequiredArgsConstructor
+public class PersonDetails implements UserDetails {
+    final private Person person;
 
-public class CallerDetails implements UserDetails {
-    final private Caller caller;
-
-    public CallerDetails(Caller caller) {
-        this.caller = caller;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(caller.getRole()));
+        return Collections.singletonList(new SimpleGrantedAuthority(person.getRole()));
     }
 
     @Override
     public String getPassword() {
-        return caller.getPassword();
+        return person.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return caller.getUsername();
+        return person.getUsername();
     }
 
     @Override
@@ -47,6 +45,6 @@ public class CallerDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return caller.isEnabled();
+        return person.isEnabled();
     }
 }

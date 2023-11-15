@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/registration}" th:object="${person}">
+    <label for="username">Мои ФИО: </label>
+    <input type="text" th:field="*{username}" id="username"/>
+    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+    <br/>
+    <label for="password">Мой пароль: </label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <br/>
+    <label for="position">Моя дата рождения: </label>
+    <input type="date" th:field="*{birthday}" id="position"/>
+    <div style="color:red" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
+    <br/>
+    <label for="phone">Мой телефон: </label>
+    <input type="text" th:field="*{phone}" id="phone"/>
+    <div style="color:red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+    <br/>
+    <label for="iAmWorker">Я предоставляю услуги: </label>
+    <input type="checkbox" th:field="*{iAmWorker}" id="iAmWorker"/>
+    <div style="color:red" th:if="${#fields.hasErrors('iAmWorker')}" th:errors="*{iAmWorker}"></div>
+    <br/>
+    <label for="serviceDescription">Описание услуг: </label>
+    <input type="text" th:field="*{serviceDescription}" id="serviceDescription"/>
+    <div style="color:red" th:if="${#fields.hasErrors('serviceDescription')}" th:errors="*{serviceDescription}"></div>
+    <br/>
+    <label for="experienceDate">Работаю по специальности с этой даты (стаж): </label>
+    <input type="date" th:field="*{experienceDate}" id="experienceDate"/>
+    <div style="color:red" th:if="${#fields.hasErrors('experienceDate')}" th:errors="*{experienceDate}"></div>
+    <br/>
+    <label for="price">Мой ценник: </label>
+    <input type="text" th:field="*{price}" id="price"/>
+    <div style="color:red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+    <br/>
+    <input type="submit" value="Зарегистрироваться"/>
+</form>
+</body>
+</html>

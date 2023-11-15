@@ -28,7 +28,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "caller", referencedColumnName = "username")
-    Caller caller;
+    Person caller;
 
     @Column(name = "equipment")
     @NotEmpty(message = "Поле 'оборудование' не должно быть пустым")
@@ -41,8 +41,8 @@ public class Review {
     String reason;
 
     @ManyToOne
-    @JoinColumn(name = "worker", referencedColumnName = "name")
-    Worker worker;
+    @JoinColumn(name = "worker", referencedColumnName = "username")
+    Person worker;
 
     @Column(name = "work_done")
     @NotEmpty(message = "Метка 'работа выполнена' должна быть определена")
