@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface PersonRepository extends JpaRepository<Person, String> {
     Optional<Person> findByUsername(String username);
     List<Person> findByIamWorkerTrue();
+
+    Optional<Person> findByUsernameAndIamWorkerTrue(String username);
 }

@@ -54,16 +54,13 @@ public class Person{
 
     @OneToMany(mappedBy = "worker")
     List<Review> reviewsOnMe;
-    public int getRating(){
-        if (reviewsOnMe.isEmpty()) return 0;
-        int result = 0;
-        for(Review review: reviewsOnMe){
-            result += review.getRating();
-        }
-        return result / reviewsOnMe.size();
-    }
 
-    public int numOfReviews(){
-        return reviewsOnMe.size();
+    public Person(String username){
+        this.username = username;
+        this.birthday = new Date();
+        this.iamWorker = false;
+        this.enabled = false;
+        this.role = "ROLE_GUEST";
+        this.phone = "0";
     }
 }

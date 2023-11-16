@@ -23,8 +23,8 @@
     <div style="color:red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
     <br/>
     <label for="iAmWorker">Я предоставляю услуги: </label>
-    <input type="checkbox" th:field="*{iAmWorker}" id="iAmWorker"/>
-    <div style="color:red" th:if="${#fields.hasErrors('iAmWorker')}" th:errors="*{iAmWorker}"></div>
+    <input type="checkbox" th:field="*{iamWorker}" id="iAmWorker"/>
+    <div style="color:red" th:if="${#fields.hasErrors('iamWorker')}" th:errors="*{iamWorker}"></div>
     <br/>
     <label for="serviceDescription">Описание услуг: </label>
     <input type="text" th:field="*{serviceDescription}" id="serviceDescription"/>

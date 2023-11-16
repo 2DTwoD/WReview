@@ -43,4 +43,7 @@ public class PersonService {
     public Optional<Person> findByUsername(String name){
         return personRepository.findByUsername(name);
     }
+    public Optional<Person> findWorkerByUsername(String name){
+        return personRepository.findByUsernameAndIamWorkerTrue(name);
+    }
 }

@@ -2,57 +2,60 @@ package org.study.wreview.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "reviews")
 @Data
-@EqualsAndHashCode
-@NoArgsConstructor
+@Entity
 @ToString
+@NoArgsConstructor
+@EqualsAndHashCode
+@Table(name = "reviews")
 public class Review {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "id")
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long id;
 
-    @Column(name = "time_stamp")
-    Date dateTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+    Date timestamp;
+
+    @Transient
+    String callerName;
 
     @ManyToOne
     @JoinColumn(name = "caller", referencedColumnName = "username")
     Person caller;
 
-    @Column(name = "equipment")
     @NotEmpty(message = "Поле 'оборудование' не должно быть пустым")
-    @Max(value = 100, message = "Поле 'оборудование' должно содержать не более 100 символов")
+    @Size(max = 100, message = "Поле 'оборудование' должно содержать не более 100 символов")
     String equipment;
 
-    @Column(name = "reason")
     @NotEmpty(message = "Поле 'причина вызова' не должно быть пустым")
-    @Max(value = 500, message = "Поле 'причина вызова' должно содержать не более 500 символов")
+    @Size(max = 500, message = "Поле 'причина вызова' должно содержать не более 500 символов")
     String reason;
+
+    @Transient
+    String workerName;
 
     @ManyToOne
     @JoinColumn(name = "worker", referencedColumnName = "username")
     Person worker;
 
     @Column(name = "work_done")
-    @NotEmpty(message = "Метка 'работа выполнена' должна быть определена")
     boolean workDone;
 
-    @Column(name = "comment")
     String comment;
 
-    @Column(name = "rating")
-    @NotEmpty(message = "Вы должны поставить оценку рабочему")
-    @Size(min = 0, max = 10, message = "Поставьте оценку от 0 до 10")
+    @Min(value = 0, message = "Оценка не должна быть ниже 0")
+    @Max(value = 10, message = "Оценка не должна быть выше 10")
     int rating;
 }

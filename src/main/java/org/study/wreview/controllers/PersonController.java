@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.study.wreview.models.Person;
 import org.study.wreview.services.PersonService;
+import org.study.wreview.services.PersonWithRatingService;
 
 import java.util.Optional;
 
@@ -16,9 +17,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PersonController {
     final private PersonService personService;
+    final private PersonWithRatingService personWithRatingService;
     @GetMapping("")
     public String index(Model model){
-        model.addAttribute("persons", personService.findAll());
+        model.addAttribute("persons", personWithRatingService.findAll());
         return "person/index";
     }
 

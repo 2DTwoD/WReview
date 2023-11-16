@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить отзыв</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/review}" th:object="${review}">
+    <label for="caller">Заказчик: </label>
+    <input type="text" th:field="*{caller.username}" id="caller" readonly/>
+    <br/>
+
+    <label for="timestamp">Дата оформления отзыва: </label>
+    <input type="text" th:field="*{timestamp}" id="timestamp" readonly/>
+    <br/>
+
+    <label for="equipment">Название оборудования: </label>
+    <input type="text" th:field="*{equipment}" id="equipment"/>
+    <div style="color:red" th:if="${#fields.hasErrors('equipment')}" th:errors="*{equipment}"></div>
+    <br/>
+
+    <label for="reason">Причина вызова: </label>
+    <input type="text" th:field="*{reason}" id="reason"/>
+    <div style="color:red" th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></div>
+    <br/>
+
+    <label for="worker">Имя рабочего: </label>
+    <input type="text" list="worker_list" id="worker" th:field="*{worker.username}">
+    <datalist id="worker_list">
+        <option th:each="w: ${workers}" th:text="${w.username}">
+    </datalist>
+    <div style="color:red" th:if="${#fields.hasErrors('worker')}" th:errors="*{worker}"></div>
+    <br/>
+
+    <label for="workDone">Работа выполнена: </label>
+    <input type="checkbox" th:field="*{workDone}" id="workDone"/>
+    <div style="color:red" th:if="${#fields.hasErrors('workDone')}" th:errors="*{workDone}"></div>
+    <br/>
+
+    <label for="comment">Комментарий: </label>
+    <input type="text" th:field="*{comment}" id="comment"/>
+    <div style="color:red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+    <br/>
+
+    <label for="rating">Оценка рабочего: </label>
+    <input list="rating_list" id="rating" th:field="*{rating}">
+    <datalist id="rating_list">
+        <option th:each="i: ${#numbers.sequence(0, 10)}" th:text="${i}">
+    </datalist>
+    <br/>
+
+    <input type="submit" value="Добавить отзыв"/>
+</form>
+</body>
+</html>

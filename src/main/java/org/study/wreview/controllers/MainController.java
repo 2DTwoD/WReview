@@ -16,7 +16,6 @@ public class MainController {
     @GetMapping("")
     String index(Model model){
         List<Person> persons = personService.findWorkers();
-        persons.sort((p1, p2) -> (p2.getRating() - p1.getRating()));
         model.addAttribute("persons", persons);
         return "index";
     }
