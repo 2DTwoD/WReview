@@ -5,9 +5,32 @@
     <title>Список пользователей</title>
 </head>
 <body>
-    <div th:each="person : ${persons}">
-        <a th:href="@{/person/{name}(name=${person.getUsername()})}"
-           th:text="${'Имя:' + person.getUsername() + ', Услуга: ' + person.getServiceDescription() + 'Оценка: ' + person.getRating()}"></a>
-    </div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Имя работника</th>
+        <th>Возраст</th>
+        <th>Услуги</th>
+        <th>Телефон</th>
+        <th>Стаж</th>
+        <th>Цена услуги</th>
+        <th>Рейтинг</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="person : ${persons}">
+        <td th:text="${person.getUsername()}"></td>
+        <td th:text="${person.getAge()}"></td>
+        <td th:text="${person.getServiceDescription()}"></td>
+        <td th:text="${person.getPhone()}"></td>
+        <td th:text="${person.getExperience()}"></td>
+        <td th:text="${person.getPrice()}"></td>
+        <td th:text="${person.getRating()}"></td>
+        <td><a th:href="@{/review/add?worker={name}(name=${person.getUsername()})}">Написать отзыв</a></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

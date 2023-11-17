@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о пользователе</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать пользователя</title>
+</head>
+<body>
+<div>
+    <div th:text="${'Имя: ' + person.getUsername()}"></div>
+</div>
+
+<table>
+    <tbody>
+    <tr>
+        <td>Имя:</td>
+        <td th:text="${person.getUsername()}"></td>
+    </tr>
+    <tr>
+        <td>Возраст:</td>
+        <td th:text="${person.getAge()}"></td>
+    </tr>
+    <tr>
+        <td>Наименование услуги:</td>
+        <td th:text="${person.getServiceDescription()}"></td>
+    </tr>
+    <tr>
+        <td>Стаж:</td>
+        <td th:text="${person.getExperience()}"></td>
+    </tr>
+    <tr>
+        <td>Телефон:</td>
+        <td th:text="${person.getPhone()}"></td>
+    </tr>
+    <tr>
+        <td>Цена услуги:</td>
+        <td th:text="${person.getPrice()}"></td>
+    </tr>
+    <tr>
+        <td>Рейтинг:</td>
+        <td th:text="${person.getRating()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+</body>
+</html>

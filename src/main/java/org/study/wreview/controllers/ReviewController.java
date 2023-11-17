@@ -16,8 +16,10 @@ import org.study.wreview.models.Review;
 import org.study.wreview.services.PersonService;
 import org.study.wreview.services.ReviewService;
 import org.study.wreview.utils.CurrentUserInfo;
+import org.study.wreview.utils.Sorting;
 
 import java.util.Date;
+
 
 @Controller
 @RequestMapping("/review")
@@ -40,7 +42,7 @@ public class ReviewController {
                 () -> review.setCaller(new Person(currentUserInfo.getUsername()))
         );
         review.setTimestamp(new Date());
-        model.addAttribute("workers", personService.findWorkers());
+        model.addAttribute("workers", personService.findWorkers(Sorting.NAME_ASC));
         return "review/add";
     }
 
@@ -50,7 +52,7 @@ public class ReviewController {
                 .ifPresentOrElse(
                         review::setWorker,
                         () -> {
-                            model.addAttribute("workers", personService.findWorkers());
+                            model.addAttribute("workers", personService.findWorkers(Sorting.NAME_ASC));
                             bindingResult.rejectValue("worker", "",
                                     "Введите имя рабочего правильно");
                         });

@@ -13,7 +13,7 @@ import org.study.wreview.security.PersonDetails;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PersonDetailService implements UserDetailsService {
     final private PersonRepository personRepository;
