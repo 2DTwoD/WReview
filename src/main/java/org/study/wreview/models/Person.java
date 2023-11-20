@@ -11,7 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.study.wreview.utils.DateUtils;
 
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,9 +26,9 @@ public class Person {
     String password;
 
     @NotNull(message = "Поле 'дата рождения' не должно быть пустым")
-    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    Date birthday;
+    @Temporal(TemporalType.DATE)
+    private Date birthday;
 
     @NotEmpty(message = "Поле 'телефон' не должно быть пустым")
     String phone;
@@ -40,9 +40,9 @@ public class Person {
     String serviceDescription;
 
     @Column(name = "experience_date")
-    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    Date experienceDate;
+    @Temporal(TemporalType.DATE)
+    private Date experienceDate;
 
     int price;
 
@@ -50,11 +50,14 @@ public class Person {
 
     String role;
 
-    @OneToMany(mappedBy = "caller")
+    @OneToMany(mappedBy = "caller", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Review> myReviews;
 
-    @OneToMany(mappedBy = "worker")
+    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Review> reviewsOnMe;
+
+    @Transient
+    Double rating;
 
     @Transient
     Long numOfCalculatedReviews;
@@ -77,11 +80,20 @@ public class Person {
     }
 
     public double getRating(){
-        return Math.round(100 * reviewsOnMe.stream()
-                .filter(review -> review.getTimestamp().after(DateUtils.getDateAgo()))
-                .mapToDouble(Review::getRating).average().orElse(0.0)) / 100.0;
+        if(reviewsOnMe == null){
+            return 0.0;
+        }
+        if (rating == null){
+            rating = reviewsOnMe.stream()
+                    .filter(review -> review.getTimestamp().after(DateUtils.getDateAgo()))
+                    .mapToDouble(Review::getRating).average().orElse(0.0);
+        }
+        return rating;
     }
     public long getNumOfCalcReviews(){
+        if(reviewsOnMe == null){
+            return 0;
+        }
         if(numOfCalculatedReviews == null){
             numOfCalculatedReviews = reviewsOnMe.stream()
                     .filter(review -> review.getTimestamp().after(DateUtils.getDateAgo()))

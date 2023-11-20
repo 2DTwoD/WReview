@@ -7,10 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.study.wreview.models.Person;
 import org.study.wreview.models.Review;
 import org.study.wreview.services.PersonService;
@@ -36,11 +33,13 @@ public class ReviewController {
     }
 
     @GetMapping("/add")
-    public String addGet(@ModelAttribute("review") Review review, Model model){
+    public String addGet(@ModelAttribute("review") Review review, Model model,
+                         @RequestParam(value = "workerName", required = false) String workerName){
         personService.findByUsername(currentUserInfo.getUsername()).ifPresentOrElse(
                 review::setCaller,
                 () -> review.setCaller(new Person(currentUserInfo.getUsername()))
         );
+        personService.findByUsername(workerName).ifPresent(review::setWorker);
         review.setTimestamp(new Date());
         model.addAttribute("workers", personService.findWorkers(Sorting.NAME_ASC));
         return "review/add";
@@ -53,7 +52,7 @@ public class ReviewController {
                         review::setWorker,
                         () -> {
                             model.addAttribute("workers", personService.findWorkers(Sorting.NAME_ASC));
-                            bindingResult.rejectValue("worker", "",
+                            bindingResult.rejectValue("worker.username", "",
                                     "Введите имя рабочего правильно");
                         });
         if(bindingResult.hasErrors()){

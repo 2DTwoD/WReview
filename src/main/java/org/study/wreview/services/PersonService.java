@@ -12,8 +12,11 @@ import org.study.wreview.repositories.PersonRepository;
 import org.study.wreview.utils.Sorting;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Comparator.comparing;
 
 @Service
 @Transactional(readOnly = true)
@@ -29,7 +32,9 @@ public class PersonService {
     public List<Person> findWorkers(Sorting sorting){
         List<Person> persons = personRepository.findByIamWorkerTrueOrderByUsername();
         if (sorting == Sorting.RATING_DESC){
-            persons.sort((p1, p2) -> (int) (100.0 * (p2.getRating() - p1.getRating())));
+            persons.sort(Comparator.comparing(Person::getRating)
+                    .thenComparing(Person::getNumOfCalcReviews).reversed()
+                    .thenComparing(Person::getUsername));
         }
         return persons;
     }
@@ -51,6 +56,11 @@ public class PersonService {
             p.setEnabled(person.isEnabled());
             personRepository.save(p);
         });
+    }
+
+    @Transactional
+    public void delete(Person person){
+        personRepository.delete(person);
     }
 
     public Optional<Person> findByUsername(String name){

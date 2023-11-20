@@ -7,7 +7,7 @@
 <body>
 <div th:each="review : ${reviews}">
     <a th:href="@{/review/{id}(id=${review.getId()})}"
-       th:text="${review.getTimestamp() + ', ' + review.getEquipment() + ', ' + review.getReason()}"></a>
+       th:text="${review.getBeautyTimestamp() + ', ' + review.getEquipment() + ', ' + review.getReason()}"></a>
 </div>
 </body>
 </html>

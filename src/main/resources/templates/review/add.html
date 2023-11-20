@@ -29,7 +29,7 @@
     <datalist id="worker_list">
         <option th:each="w: ${workers}" th:text="${w.username}">
     </datalist>
-    <div style="color:red" th:if="${#fields.hasErrors('worker')}" th:errors="*{worker}"></div>
+    <div style="color:red" th:if="${#fields.hasErrors('worker.username')}" th:errors="*{worker.username}"></div>
     <br/>
 
     <label for="workDone">Работа выполнена: </label>

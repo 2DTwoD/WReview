@@ -24,8 +24,8 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/test")
-    String test(){
-        return "test";
+    @GetMapping("/error")
+    String error(){
+        return "myerror";
     }
 }

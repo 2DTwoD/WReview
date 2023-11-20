@@ -16,7 +16,8 @@
         <th>Стаж</th>
         <th>Цена услуги</th>
         <th>Рейтинг</th>
-        <th>Действие</th>
+        <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -28,7 +29,8 @@
         <td th:text="${person.getExperience()}"></td>
         <td th:text="${person.getPrice()}"></td>
         <td th:text="${person.getRating()}"></td>
-        <td><a th:href="@{/review/add?worker={name}(name=${person.getUsername()})}">Написать отзыв</a></td>
+        <td><a th:href="@{/person/{name}(name=${person.getUsername()})}">Подробнее</a></td>
+        <td><a th:href="@{/review/add?workerName={name}(name=${person.getUsername()})}">Написать отзыв</a></td>
     </tr>
     </tbody>
 </table>

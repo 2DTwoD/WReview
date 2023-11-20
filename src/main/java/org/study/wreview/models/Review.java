@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -59,4 +60,8 @@ public class Review {
     @Min(value = 0, message = "Оценка не должна быть ниже 0")
     @Max(value = 10, message = "Оценка не должна быть выше 10")
     int rating;
+
+    public String getBeautyTimestamp(){
+        return new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(getTimestamp());
+    }
 }

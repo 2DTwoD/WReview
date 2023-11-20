@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать пользователя</title>
+</head>
+<body>
+    <form th:method="PATCH" th:action="@{/person/edit_pass}" th:object="${password}">
+        <div>Имя: <span sec:authentication="name"></span></div>
+        <label for="oldPassword">Старый пароль: </label>
+        <input type="password" th:field="*{oldPassword}" id="oldPassword"/>
+        <div style="color:red" th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"></div>
+        <br/>
+        <label for="newPassword">Новый пароль: </label>
+        <input type="password" th:field="*{newPassword}" id="newPassword"/>
+        <div style="color:red" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></div>
+        <br/>
+        <label for="confirmPassword">Подтвердите пароль: </label>
+        <input type="password" th:field="*{confirmPassword}" id="confirmPassword"/>
+        <div style="color:red" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+        <br/>
+        <input type="submit" value="Изменить"/>
+    </form>
+    <a th:href="@{/person/edit}">
+        <button>Назад</button>
+    </a>
+</body>
+</html>

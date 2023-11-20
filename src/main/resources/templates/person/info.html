@@ -9,13 +9,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Редактировать пользователя</title>
+    <title>Информация о пользователе</title>
 </head>
 <body>
-<div>
-    <div th:text="${'Имя: ' + person.getUsername()}"></div>
-</div>
-
 <table>
     <tbody>
     <tr>
@@ -48,6 +44,12 @@
     </tr>
     </tbody>
 </table>
+<a th:if="${person.iamWorker}" th:href="@{/review/add?workerName={name}(name=${person.getUsername()})}">
+    <button>Написать отзыв</button>
+</a>
+<form th:method="DELETE" th:action="@{/person/{name}(name=${person.username})}">
+    <input type="submit" value="Удалить"/>
+</form>
 </body>
 </html>
 </body>
