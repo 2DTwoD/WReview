@@ -5,9 +5,38 @@
     <title>Список отзывов</title>
 </head>
 <body>
-<div th:each="review : ${reviews}">
-    <a th:href="@{/review/{id}(id=${review.getId()})}"
-       th:text="${review.getBeautyTimestamp() + ', ' + review.getEquipment() + ', ' + review.getReason()}"></a>
-</div>
+<table>
+    <thead>
+    <tr>
+        <th>Время создания</th>
+        <th>Автор отзыва</th>
+        <th>Оборудование</th>
+        <th>Причина вызова</th>
+        <th>Исполнитель</th>
+        <th>Метка выполнения</th>
+        <th>Комментарий</th>
+        <th>Оценка</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="review: ${reviews}">
+        <td th:text="${review.getBeautyTimestamp()}"></td>
+        <td th:text="${review.caller.username}"></td>
+        <td th:text="${review.equipment}"></td>
+        <td th:text="${review.reason}"></td>
+        <td th:text="${review.worker.username}"></td>
+        <td>
+            <span th:if="${review.workDone}">Да</span>
+            <span th:unless="${review.workDone}">Нет</span>
+        </td>
+        <td th:text="${review.getSmallComment()}"></td>
+        <td th:text="${review.rating}"></td>
+        <td><a th:href="@{/review/{id}(id=${review.getId()})}">Подробнее</a></td>
+    </tr>
+    </tbody>
+</table>
+<span th:if="${currentPage > 0}"><a th:href="@{/review?pageNum={num}(num=${currentPage - 1})}"> << </a></span>
+<span th:if="${currentPage < totalPages}"><a th:href="@{/review?pageNum={num}(num=${currentPage + 1})}"> >> </a></span>
 </body>
 </html>

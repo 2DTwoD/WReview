@@ -62,6 +62,10 @@ public class Review {
     int rating;
 
     public String getBeautyTimestamp(){
-        return new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(getTimestamp());
+        return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(getTimestamp());
+    }
+    public String getSmallComment(){
+        String result = comment.substring(0, Math.min(comment.length(), 20));
+        return result.length() == 20? result + "...": result;
     }
 }
