@@ -3,40 +3,55 @@ package org.study.wreview.services;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.domain.DomainEvents;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.study.wreview.models.Person;
 import org.study.wreview.repositories.PersonRepository;
-import org.study.wreview.utils.Sorting;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Comparator.comparing;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PersonService {
+    @Autowired
     PersonRepository personRepository;
+
+    @Value("${rating.max.size}")
+    int maxSize;
 
     public List<Person> findAll(){
         return personRepository.findAll(Sort.by("username"));
     }
 
-    public List<Person> findWorkers(Sorting sorting){
-        List<Person> persons = personRepository.findByIamWorkerTrueOrderByUsername();
-        if (sorting == Sorting.RATING_DESC){
-            persons.sort(Comparator.comparing(Person::getRating)
-                    .thenComparing(Person::getNumOfCalcReviews).reversed()
-                    .thenComparing(Person::getUsername));
-        }
-        return persons;
+    public Page<Person> findAllWithFilter(String filter, Pageable pageable){
+        return personRepository.findAllWithFilter(filter, pageable);
+    }
+
+    public Page<Person> findWorkersWithFilter(String filter, Pageable pageable){
+        return personRepository.findWorkersWithFilter(filter, pageable);
+    }
+
+    public List<Person> findWorkersWithRating(){
+        return personRepository.findByIamWorkerTrueOrderByUsername()
+                .stream()
+                .sorted(Comparator.comparing(Person::getRating)
+                        .thenComparing(Person::getNumOfCalcReviews).reversed()
+                        .thenComparing(Person::getUsername))
+                .limit(maxSize)
+                .toList();
+    }
+    public List<Person> findWorkers(){
+        return personRepository.findByIamWorkerTrueOrderByUsername();
     }
 
     @Transactional

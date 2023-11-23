@@ -34,5 +34,11 @@
     </tr>
     </tbody>
 </table>
+<span th:if="${currentPage > 0}">
+    <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage - 1}, filt=${filter})}"> << </a>
+</span>
+<span th:if="${currentPage < totalPages}">
+    <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage + 1}, filt=${filter})}"> >> </a>
+</span>
 </body>
 </html>

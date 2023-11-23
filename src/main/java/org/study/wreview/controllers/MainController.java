@@ -19,7 +19,7 @@ public class MainController {
     PersonService personService;
     @GetMapping("")
     String index(Model model){
-        List<Person> persons = personService.findWorkers(Sorting.RATING_DESC);
+        List<Person> persons = personService.findWorkersWithRating();
         model.addAttribute("persons", persons);
         return "index";
     }

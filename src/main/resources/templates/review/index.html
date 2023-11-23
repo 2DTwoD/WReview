@@ -17,6 +17,7 @@
         <th>Комментарий</th>
         <th>Оценка</th>
         <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -33,10 +34,15 @@
         <td th:text="${review.getSmallComment()}"></td>
         <td th:text="${review.rating}"></td>
         <td><a th:href="@{/review/{id}(id=${review.getId()})}">Подробнее</a></td>
+        <td><a th:href="@{/review/{id}/edit(id=${review.getId()})}">Редактировать</a></td>
     </tr>
     </tbody>
 </table>
-<span th:if="${currentPage > 0}"><a th:href="@{/review?pageNum={num}(num=${currentPage - 1})}"> << </a></span>
-<span th:if="${currentPage < totalPages}"><a th:href="@{/review?pageNum={num}(num=${currentPage + 1})}"> >> </a></span>
+<span th:if="${currentPage > 0}">
+    <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage - 1}, filt=${filter})}"> << </a>
+</span>
+<span th:if="${currentPage < totalPages}">
+    <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage + 1}, filt=${filter})}"> >> </a>
+</span>
 </body>
 </html>

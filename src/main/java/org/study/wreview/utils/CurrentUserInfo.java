@@ -16,4 +16,11 @@ public class CurrentUserInfo {
     public boolean userIsCurrent(String name){
         return name != null && name.equals(getUsername());
     }
+
+    public boolean currentUserIsAdmin(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities()
+                .stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+    }
 }

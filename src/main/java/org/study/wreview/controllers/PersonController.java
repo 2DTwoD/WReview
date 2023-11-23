@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.study.wreview.models.NewPassword;
 import org.study.wreview.models.Person;
 import org.study.wreview.services.PersonService;
 import org.study.wreview.utils.CurrentUserInfo;
+import org.study.wreview.utils.PaginationFilterEngine;
 import org.study.wreview.utils.Sorting;
 
 import java.util.Optional;
@@ -25,10 +27,26 @@ public class PersonController {
     PersonService personService;
     CurrentUserInfo currentUserInfo;
     PasswordEncoder passwordEncoder;
+    PaginationFilterEngine paginationFilterEngine;
 
     @GetMapping("")
-    public String index(Model model){
-        model.addAttribute("persons", personService.findWorkers(Sorting.NAME_ASC));
+    public String index(Model model,
+                        @RequestParam(name = "pageNum", required = false) Integer pageNum,
+                        @RequestParam(name = "filter", required = false) String filter) {
+        model.addAttribute("persons", paginationFilterEngine.getPage(model, pageNum, filter,
+                Sort.by("username"),
+                ((pageable, f) -> personService.findAllWithFilter(f, pageable))
+        ));
+        return "person/index";
+    }
+    @GetMapping("/workers")
+    public String workers(Model model,
+                        @RequestParam(name = "pageNum", required = false) Integer pageNum,
+                        @RequestParam(name = "filter", required = false) String filter) {
+        model.addAttribute("persons", paginationFilterEngine.getPage(model, pageNum, filter,
+                Sort.by("username"),
+                ((pageable, f) -> personService.findWorkersWithFilter(f, pageable))
+        ));
         return "person/index";
     }
 
