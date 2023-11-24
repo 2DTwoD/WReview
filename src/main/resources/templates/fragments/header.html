@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+</head>
+<body>
+<div th:fragment="header">
+    <div>Лучший работник года</div>
+    <span>
+        <a th:href="@{/login}"><button>Войти</button></a>
+        <form th:action="@{/logout}" th:method="POST">
+            <input type="submit" value="Выйти" />
+        </form>
+        <a th:href="@{/registration}"><button>Регистрация</button></a>
+    </span>
+    <span>
+        <a th:href="@{/person/edit}"><button>Мои настройки</button></a>
+        <a th:href="@{/}"><button>Рейтинг рабочих</button></a>
+        <a th:href="@{/person/workers}"><button>Список всех рабочих</button></a>
+        <a th:href="@{/person}"><button>Список всех пользователей</button></a>
+        <a th:href="@{/review}"><button>Все отзывы</button></a>
+        <a th:href="@{/review/my}"><button>Мои отзывы</button></a>
+        <a th:href="@{/review/on_me}"><button>Отзывы на меня</button></a>
+    </span>
+</div>
+</body>
+</html>

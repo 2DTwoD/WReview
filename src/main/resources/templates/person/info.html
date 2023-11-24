@@ -12,6 +12,7 @@
     <title>Информация о пользователе</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <table>
     <tbody>
     <tr>
@@ -23,7 +24,7 @@
         <td th:text="${person.getAge()}"></td>
     </tr>
     <tr>
-        <td>Наименование услуги:</td>
+        <td>Описание услуги:</td>
         <td th:text="${person.getServiceDescription()}"></td>
     </tr>
     <tr>
@@ -50,6 +51,7 @@
 <form th:method="DELETE" th:action="@{/person/{name}(name=${person.username})}">
     <input type="submit" value="Удалить"/>
 </form>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
 </body>

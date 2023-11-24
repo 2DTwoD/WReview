@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Лучший работник</title>
+    <link th:href="@{css/main.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/test.js}"></script>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <table>
     <thead>
     <tr>
@@ -27,5 +30,6 @@
     <input type="submit" value="Logout" />
 </form>
 <a th:href="@{/registration}">Регистрация</a>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

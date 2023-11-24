@@ -5,6 +5,7 @@
     <title>Отзыв подробнее</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <table>
     <tbody>
     <tr>
@@ -47,5 +48,6 @@
 <form th:method="DELETE" th:action="@{/review/{name}(name=${review.id})}">
     <input type="submit" value="Удалить"/>
 </form>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

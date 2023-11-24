@@ -5,6 +5,8 @@
     <title>Список отзывов</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/filter :: filter"></div>
 <table>
     <thead>
     <tr>
@@ -38,11 +40,7 @@
     </tr>
     </tbody>
 </table>
-<span th:if="${currentPage > 0}">
-    <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage - 1}, filt=${filter})}"> << </a>
-</span>
-<span th:if="${currentPage < totalPages}">
-    <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage + 1}, filt=${filter})}"> >> </a>
-</span>
+<div th:replace="fragments/pagination :: pagination"></div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

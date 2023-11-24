@@ -5,7 +5,8 @@
     <title>Список пользователей</title>
 </head>
 <body>
-
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragments/filter :: filter"></div>
 <table>
     <thead>
     <tr>
@@ -24,7 +25,7 @@
     <tr th:each="person : ${persons}">
         <td th:text="${person.getUsername()}"></td>
         <td th:text="${person.getAge()}"></td>
-        <td th:text="${person.getServiceDescription()}"></td>
+        <td th:text="${person.getSmallServiceDescription()}"></td>
         <td th:text="${person.getPhone()}"></td>
         <td th:text="${person.getExperience()}"></td>
         <td th:text="${person.getPrice()}"></td>
@@ -34,11 +35,7 @@
     </tr>
     </tbody>
 </table>
-<span th:if="${currentPage > 0}">
-    <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage - 1}, filt=${filter})}"> << </a>
-</span>
-<span th:if="${currentPage < totalPages}">
-    <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage + 1}, filt=${filter})}"> >> </a>
-</span>
+<div th:replace="fragments/pagination :: pagination"></div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

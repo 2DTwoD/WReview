@@ -82,11 +82,7 @@ public class PersonController {
         if(bindingResult.hasErrors()){
             return "person/edit";
         }
-        Optional<Person> personForUpdate = personService.findByUsername(currentUserInfo.getUsername());
-        if(personForUpdate.isEmpty()) {
-            return "redirect:/error";
-        }
-        personService.update(currentUserInfo.getUsername(), personForUpdate.get());
+        personService.update(currentUserInfo.getUsername(), person);
         return "redirect:/";
     }
 

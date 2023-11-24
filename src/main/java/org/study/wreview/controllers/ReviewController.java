@@ -79,24 +79,17 @@ public class ReviewController {
 
     @PostMapping("")
     public String addPost(@ModelAttribute("review") @Valid Review review, BindingResult bindingResult, Model model) {
-        personService.findWorkerByUsername(review.getWorker().getUsername())
-                .ifPresentOrElse(
-                        review::setWorker,
-                        () -> {
-                            model.addAttribute("workers", personService.findWorkers());
-                            bindingResult.rejectValue("worker.username", "",
-                                    "Введите имя рабочего правильно");
-                        });
+        checkWorkerNameAndAddListInModel(review.getWorker(), model, bindingResult);
         if (bindingResult.hasErrors()) {
             return "review/add";
         }
-        personService.findByUsername(currentUserInfo.getUsername()).ifPresentOrElse(
-                review::setCaller,
-                () -> {
-                    Person person = new Person(currentUserInfo.getUsername());
-                    personService.save(person);
-                    review.setCaller(person);
-                });
+//        personService.findByUsername(currentUserInfo.getUsername()).ifPresentOrElse(
+//                review::setCaller,
+//                () -> {
+//                    Person person = new Person(currentUserInfo.getUsername());
+//                    personService.save(person);
+//                    review.setCaller(person);
+//                });
         reviewService.save(review);
         return "redirect:/review";
     }
@@ -130,15 +123,7 @@ public class ReviewController {
         if (reviewForUpdate.isEmpty()) {
             return "redirect:/error";
         }
-
-        personService.findWorkerByUsername(review.getWorker().getUsername())
-                .ifPresentOrElse(
-                        review::setWorker,
-                        () -> {
-                            model.addAttribute("workers", personService.findWorkers());
-                            bindingResult.rejectValue("worker.username", "",
-                                    "Введите имя рабочего правильно");
-                        });
+        checkWorkerNameAndAddListInModel(review.getWorker(), model, bindingResult);
 
         if (!currentUserInfo.currentUserIsAdmin() && !currentUserInfo.userIsCurrent(reviewForUpdate.get().getCaller().getUsername())) {
             bindingResult.rejectValue("caller.username", "",
@@ -155,8 +140,19 @@ public class ReviewController {
 
     @DeleteMapping("/{id}")
     public String info(@PathVariable("id") long id){
-        reviewService.findById(id).ifPresent(reviewService::delete);
+        reviewService.findById(id).ifPresent(r ->{
+            if (!currentUserInfo.currentUserIsAdmin() && !currentUserInfo.userIsCurrent(r.getCaller().getUsername())) {
+                reviewService.delete(r);
+            }
+        });
         return "redirect:/person";
     }
 
+    private void checkWorkerNameAndAddListInModel(Person worker, Model model, BindingResult bindingResult){
+        Optional<Person> person = personService.findWorkerByUsername(worker.getUsername());
+        if (person.isEmpty()){
+            model.addAttribute("workers", personService.findWorkers());
+            bindingResult.rejectValue("worker.username", "","Введите имя рабочего правильно");
+        }
+    }
 }

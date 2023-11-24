@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.study.wreview.utils.DateUtils;
 
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -79,16 +80,16 @@ public class Person {
         return DateUtils.getDuration(birthday);
     }
 
-    public double getRating(){
+    public String getRating(){
         if(reviewsOnMe == null){
-            return 0.0;
+            return new DecimalFormat("#0.0#").format(0.0);
         }
         if (rating == null){
             rating = reviewsOnMe.stream()
                     .filter(review -> review.getTimestamp().after(DateUtils.getDateAgo()))
                     .mapToDouble(Review::getRating).average().orElse(0.0);
         }
-        return rating;
+        return new DecimalFormat("#0.0#").format(rating);
     }
     public long getNumOfCalcReviews(){
         if(reviewsOnMe == null){
@@ -100,5 +101,10 @@ public class Person {
                     .count();
         }
         return numOfCalculatedReviews;
+    }
+
+    public String getSmallServiceDescription(){
+        String result = serviceDescription.substring(0, Math.min(serviceDescription.length(), 20));
+        return result.length() == 20? result + "...": result;
     }
 }

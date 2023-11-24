@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.study.wreview.models.Person;
 import org.study.wreview.services.PersonService;
 
+import java.util.Arrays;
+
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
@@ -28,6 +30,9 @@ public class AuthController {
     }
     @PostMapping("/registration")
     public String registrationPost(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+        if (Arrays.stream(new String[]{"edit", "edit_pass", "workers"}).anyMatch(s -> s.equals(person.getUsername()))){
+            bindingResult.rejectValue("username", "", "Это имя нельзя использовать");
+        }
         if (bindingResult.hasErrors())
             return "auth/registration";
         person.setPassword(passwordEncoder.encode(person.getPassword()));

@@ -5,9 +5,11 @@
     <title>Правка отзыва</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <form th:method="PATCH" th:action="@{/review/{id}(id=${review.id})}" th:object="${review}">
     <label for="caller">Заказчик: </label>
     <input type="text" th:field="*{caller.username}" id="caller" readonly/>
+    <div style="color:red" th:if="${#fields.hasErrors('caller.username')}" th:errors="*{caller.username}"></div>
     <br/>
 
     <label for="timestamp">Дата оформления отзыва: </label>
@@ -20,7 +22,7 @@
     <br/>
 
     <label for="reason">Причина вызова: </label>
-    <input type="text" th:field="*{reason}" id="reason"/>
+    <textarea rows="5" cols="100" th:field="*{reason}" id="reason"></textarea>
     <div style="color:red" th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></div>
     <br/>
 
@@ -38,7 +40,7 @@
     <br/>
 
     <label for="comment">Комментарий: </label>
-    <input type="text" th:field="*{comment}" id="comment"/>
+    <textarea rows="5" cols="100" th:field="*{comment}" id="comment"></textarea>
     <div style="color:red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
     <br/>
 
@@ -54,5 +56,6 @@
 <form th:method="DELETE" th:action="@{/review/{name}(name=${review.id})}">
     <input type="submit" value="Удалить"/>
 </form>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
