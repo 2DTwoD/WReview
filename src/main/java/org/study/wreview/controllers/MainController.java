@@ -16,7 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MainController {
+
     PersonService personService;
+
     @GetMapping("")
     String index(Model model){
         List<Person> persons = personService.findWorkersWithRating();

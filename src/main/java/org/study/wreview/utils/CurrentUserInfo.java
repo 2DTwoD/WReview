@@ -6,18 +6,17 @@ import org.springframework.stereotype.Component;
 import org.study.wreview.models.Person;
 
 
-@Component
 public class CurrentUserInfo {
-    public String getUsername(){
+    public static String getUsername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }
 
-    public boolean userIsCurrent(String name){
+    public static boolean userIsCurrent(String name){
         return name != null && name.equals(getUsername());
     }
 
-    public boolean currentUserIsAdmin(){
+    public static boolean currentUserIsAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities()
                 .stream()

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Правка отзыва</title>
@@ -49,11 +49,12 @@
     <datalist id="rating_list">
         <option th:each="i: ${#numbers.sequence(0, 10)}" th:text="${i}">
     </datalist>
+    <div style="color:red" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
     <br/>
 
     <input type="submit" value="Редактировать"/>
 </form>
-<form th:method="DELETE" th:action="@{/review/{name}(name=${review.id})}">
+<form th:if="${review.currentUserIsCallerOrAdmin()}" th:method="DELETE" th:action="@{/review/{name}(name=${review.id})}">
     <input type="submit" value="Удалить"/>
 </form>
 <div th:replace="fragments/footer :: footer"></div>

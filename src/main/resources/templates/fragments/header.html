@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
@@ -7,22 +8,20 @@
 <body>
 <div th:fragment="header">
     <div>Лучший работник года</div>
-    <span>
-        <a th:href="@{/login}"><button>Войти</button></a>
-        <form th:action="@{/logout}" th:method="POST">
+        <a sec:authorize="isAnonymous()" th:href="@{/login}"><button>Войти</button></a>
+        <a sec:authorize="isAnonymous()" th:href="@{/registration}"><button>Регистрация</button></a>
+        <span sec:authorize="isAuthenticated()" sec:authentication="principal.username"></span>
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST" style="display: inline;">
             <input type="submit" value="Выйти" />
         </form>
-        <a th:href="@{/registration}"><button>Регистрация</button></a>
-    </span>
-    <span>
-        <a th:href="@{/person/edit}"><button>Мои настройки</button></a>
+
+        <a sec:authorize="isAuthenticated()" th:href="@{/person/edit}"><button>Мои настройки</button></a>
         <a th:href="@{/}"><button>Рейтинг рабочих</button></a>
-        <a th:href="@{/person/workers}"><button>Список всех рабочих</button></a>
-        <a th:href="@{/person}"><button>Список всех пользователей</button></a>
-        <a th:href="@{/review}"><button>Все отзывы</button></a>
-        <a th:href="@{/review/my}"><button>Мои отзывы</button></a>
-        <a th:href="@{/review/on_me}"><button>Отзывы на меня</button></a>
-    </span>
+        <a sec:authorize="isAuthenticated()" th:href="@{/person/workers}"><button>Список всех рабочих</button></a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/person}"><button>Список всех пользователей</button></a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/review}"><button>Все отзывы</button></a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/review/my}"><button>Мои отзывы</button></a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/review/on_me}"><button>Отзывы на меня</button></a>
 </div>
 </body>
 </html>

@@ -26,7 +26,7 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    @Value("${rating.max.size}")
+    @Value("${rating.max.workers}")
     int maxSize;
 
     public List<Person> findAll(){
@@ -68,7 +68,6 @@ public class PersonService {
             p.setServiceDescription(person.getServiceDescription());
             p.setExperienceDate(person.getExperienceDate());
             p.setPrice(person.getPrice());
-            p.setEnabled(person.isEnabled());
             personRepository.save(p);
         });
     }

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.study.wreview.utils.CurrentUserInfo;
 import org.study.wreview.utils.DateUtils;
 
 
@@ -24,6 +25,7 @@ public class Person {
     @Id
     @Size(min = 2, max = 50, message = "Поле 'ФИО' должно содержать от 2 до 50 символов")
     String username;
+
     String password;
 
     @NotNull(message = "Поле 'дата рождения' не должно быть пустым")
@@ -62,6 +64,7 @@ public class Person {
 
     @Transient
     Long numOfCalculatedReviews;
+
 
     public Person(String username){
         this.username = username;
@@ -106,5 +109,13 @@ public class Person {
     public String getSmallServiceDescription(){
         String result = serviceDescription.substring(0, Math.min(serviceDescription.length(), 20));
         return result.length() == 20? result + "...": result;
+    }
+
+    public boolean currentUserIsMe(){
+        return CurrentUserInfo.userIsCurrent(getUsername());
+    }
+
+    public boolean currentUserNotMe(){
+        return !currentUserIsMe();
     }
 }

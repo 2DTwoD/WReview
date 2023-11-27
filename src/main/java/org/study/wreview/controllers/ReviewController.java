@@ -25,20 +25,21 @@ import java.util.Optional;
 @RequestMapping("/review")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
-public class ReviewController {
+public class ReviewController implements PaginationFilterEngine {
+
     ReviewService reviewService;
     PersonService personService;
-    CurrentUserInfo currentUserInfo;
-    PaginationFilterEngine paginationFilterEngine;
 
     @GetMapping("")
     public String index(Model model,
                         @RequestParam(name = "pageNum", required = false) Integer pageNum,
                         @RequestParam(name = "filter", required = false) String filter) {
-        model.addAttribute("reviews", paginationFilterEngine.getPage(model, pageNum, filter,
+
+        model.addAttribute("reviews", getPage(model, pageNum, filter,
                 Sort.by("timestamp").descending(),
                 ((pageable, f) -> reviewService.findAllWithFilter(f, pageable))
         ));
+
         return "review/index";
     }
 
@@ -46,10 +47,12 @@ public class ReviewController {
     public String indexMy(Model model,
                           @RequestParam(name = "pageNum", required = false) Integer pageNum,
                           @RequestParam(name = "filter", required = false) String filter) {
-        model.addAttribute("reviews", paginationFilterEngine.getPage(model, pageNum, filter,
+
+        model.addAttribute("reviews", getPage(model, pageNum, filter,
                 Sort.by("timestamp").descending(),
-                ((pageable, f) -> reviewService.findAllByCaller(currentUserInfo.getUsername(), f, pageable))
+                ((pageable, f) -> reviewService.findAllByCaller(CurrentUserInfo.getUsername(), f, pageable))
         ));
+
         return "review/index";
     }
 
@@ -57,21 +60,26 @@ public class ReviewController {
     public String indexOnMe(Model model,
                             @RequestParam(name = "pageNum", required = false) Integer pageNum,
                             @RequestParam(name = "filter", required = false) String filter) {
-        model.addAttribute("reviews", paginationFilterEngine.getPage(model, pageNum, filter,
+
+        model.addAttribute("reviews", getPage(model, pageNum, filter,
                 Sort.by("timestamp").descending(),
-                ((pageable, f) -> reviewService.findAllByWorker(currentUserInfo.getUsername(), f, pageable))
+                ((pageable, f) -> reviewService.findAllByWorker(CurrentUserInfo.getUsername(), f, pageable))
         ));
+
         return "review/index";
     }
 
     @GetMapping("/add")
     public String addGet(@ModelAttribute("review") Review review, Model model,
                          @RequestParam(value = "workerName", required = false) String workerName) {
-        personService.findByUsername(currentUserInfo.getUsername()).ifPresentOrElse(
+
+        personService.findByUsername(CurrentUserInfo.getUsername()).ifPresentOrElse(
                 review::setCaller,
-                () -> review.setCaller(new Person(currentUserInfo.getUsername()))
+                () -> review.setCaller(new Person(CurrentUserInfo.getUsername()))
         );
+
         personService.findByUsername(workerName).ifPresent(review::setWorker);
+
         review.setTimestamp(new Date());
         model.addAttribute("workers", personService.findWorkers());
         return "review/add";
@@ -79,17 +87,12 @@ public class ReviewController {
 
     @PostMapping("")
     public String addPost(@ModelAttribute("review") @Valid Review review, BindingResult bindingResult, Model model) {
-        checkWorkerNameAndAddListInModel(review.getWorker(), model, bindingResult);
+
+        checkWorkerNameAndAddWorkersInModel(review.getWorker(), model, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "review/add";
         }
-//        personService.findByUsername(currentUserInfo.getUsername()).ifPresentOrElse(
-//                review::setCaller,
-//                () -> {
-//                    Person person = new Person(currentUserInfo.getUsername());
-//                    personService.save(person);
-//                    review.setCaller(person);
-//                });
         reviewService.save(review);
         return "redirect:/review";
     }
@@ -97,19 +100,23 @@ public class ReviewController {
     @GetMapping("/{id}")
     public String info(Model model,
                           @PathVariable(name = "id") long id) {
-        reviewService.findById(id).ifPresent(r ->model.addAttribute("review", r));
+
+        reviewService.findById(id).ifPresent(r -> model.addAttribute("review", r));
         return "review/info";
     }
 
     @GetMapping("/{id}/edit")
     public String editGet(Model model,
                           @PathVariable(name = "id") long id) {
+
         Optional<Review> review = reviewService.findById(id);
         if (review.isEmpty()) {
             return "redirect:/error";
         }
+
         model.addAttribute("review", review.get());
         model.addAttribute("workers", personService.findWorkers());
+
         return "review/edit";
     }
 
@@ -123,9 +130,11 @@ public class ReviewController {
         if (reviewForUpdate.isEmpty()) {
             return "redirect:/error";
         }
-        checkWorkerNameAndAddListInModel(review.getWorker(), model, bindingResult);
 
-        if (!currentUserInfo.currentUserIsAdmin() && !currentUserInfo.userIsCurrent(reviewForUpdate.get().getCaller().getUsername())) {
+        checkWorkerNameAndAddWorkersInModel(review.getWorker(), model, bindingResult);
+
+        if (!CurrentUserInfo.currentUserIsAdmin() &&
+                !CurrentUserInfo.userIsCurrent(reviewForUpdate.get().getCaller().getUsername())) {
             bindingResult.rejectValue("caller.username", "",
                     "У вас нет права редактировать отзыв");
         }
@@ -140,17 +149,17 @@ public class ReviewController {
 
     @DeleteMapping("/{id}")
     public String info(@PathVariable("id") long id){
-        reviewService.findById(id).ifPresent(r ->{
-            if (!currentUserInfo.currentUserIsAdmin() && !currentUserInfo.userIsCurrent(r.getCaller().getUsername())) {
-                reviewService.delete(r);
-            }
-        });
-        return "redirect:/person";
+        Optional<Review> review = reviewService.findById(id);
+        if(review.isEmpty() || !review.get().currentUserIsCallerOrAdmin()) {
+            return "redirect:/error";
+        }
+        reviewService.delete(review.get());
+        return "redirect:/review";
     }
 
-    private void checkWorkerNameAndAddListInModel(Person worker, Model model, BindingResult bindingResult){
+    private void checkWorkerNameAndAddWorkersInModel(Person worker, Model model, BindingResult bindingResult){
         Optional<Person> person = personService.findWorkerByUsername(worker.getUsername());
-        if (person.isEmpty()){
+        if (person.isEmpty() || person.get().currentUserIsMe()){
             model.addAttribute("workers", personService.findWorkers());
             bindingResult.rejectValue("worker.username", "","Введите имя рабочего правильно");
         }

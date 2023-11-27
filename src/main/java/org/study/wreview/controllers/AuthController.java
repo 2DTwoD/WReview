@@ -19,6 +19,7 @@ public class AuthController {
 
     final private PersonService personService;
     final private PasswordEncoder passwordEncoder;
+
     @GetMapping("/login")
     public String login(){
         return "auth/login";
@@ -28,17 +29,20 @@ public class AuthController {
     public String registration(@ModelAttribute("person") Person person){
         return "auth/registration";
     }
+
     @PostMapping("/registration")
     public String registrationPost(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+
         if (Arrays.stream(new String[]{"edit", "edit_pass", "workers"}).anyMatch(s -> s.equals(person.getUsername()))){
             bindingResult.rejectValue("username", "", "Это имя нельзя использовать");
         }
-        if (bindingResult.hasErrors())
+
+        if (bindingResult.hasErrors()) {
             return "auth/registration";
+        }
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setRole("ROLE_USER");
         person.setEnabled(true);
-        System.out.println(person);
         personService.save(person);
         return "redirect:/";
     }

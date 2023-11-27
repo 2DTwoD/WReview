@@ -31,7 +31,11 @@
         <td th:text="${person.getPrice()}"></td>
         <td th:text="${person.getRating()}"></td>
         <td><a th:href="@{/person/{name}(name=${person.getUsername()})}">Подробнее</a></td>
-        <td><a th:href="@{/review/add?workerName={name}(name=${person.getUsername()})}">Написать отзыв</a></td>
+        <td><a th:if="${person.iamWorker && person.currentUserNotMe()}"
+               th:href="@{/review/add?workerName={name}(name=${person.getUsername()})}">Написать отзыв</a></td>
+    </tr>
+    <tr th:if="${persons.isEmpty()}">
+        <td colspan="9">Нет записей</td>
     </tr>
     </tbody>
 </table>

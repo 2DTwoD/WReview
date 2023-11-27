@@ -15,13 +15,11 @@ import org.springframework.ui.Model;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-@Component
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class PaginationFilterEngine {
-    @Value("${page.config.rowsInPage}")
-    int rowsInPage;
-    public <T> Page<T> getPage(Model model,
+public interface PaginationFilterEngine {
+
+    int rowsInPage = 5;
+
+    default <T> Page<T> getPage(Model model,
                                    Integer pageNum,
                                    String filter,
                                    Sort sort,

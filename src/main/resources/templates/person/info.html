@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Информация о пользователе</title>
@@ -45,10 +45,10 @@
     </tr>
     </tbody>
 </table>
-<a th:if="${person.iamWorker}" th:href="@{/review/add?workerName={name}(name=${person.getUsername()})}">
+<a th:if="${person.iamWorker && person.currentUserNotMe()}" th:href="@{/review/add?workerName={name}(name=${person.getUsername()})}">
     <button>Написать отзыв</button>
 </a>
-<form th:method="DELETE" th:action="@{/person/{name}(name=${person.username})}">
+<form sec:authorize="hasRole('ADMIN')" th:method="DELETE" th:action="@{/person/{name}(name=${person.username})}">
     <input type="submit" value="Удалить"/>
 </form>
 <div th:replace="fragments/footer :: footer"></div>

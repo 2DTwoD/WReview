@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.study.wreview.utils.CurrentUserInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,9 +31,6 @@ public class Review {
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     Date timestamp;
 
-    @Transient
-    String callerName;
-
     @ManyToOne
     @JoinColumn(name = "caller", referencedColumnName = "username")
     Person caller;
@@ -44,9 +42,6 @@ public class Review {
     @NotEmpty(message = "Поле 'причина вызова' не должно быть пустым")
     @Size(max = 500, message = "Поле 'причина вызова' должно содержать не более 500 символов")
     String reason;
-
-    @Transient
-    String workerName;
 
     @ManyToOne
     @JoinColumn(name = "worker", referencedColumnName = "username")
@@ -67,5 +62,8 @@ public class Review {
     public String getSmallComment(){
         String result = comment.substring(0, Math.min(comment.length(), 20));
         return result.length() == 20? result + "...": result;
+    }
+    public boolean currentUserIsCallerOrAdmin(){
+        return CurrentUserInfo.currentUserIsAdmin() || CurrentUserInfo.getUsername().equals(getCaller().getUsername());
     }
 }

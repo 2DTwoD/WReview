@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Отзыв подробнее</title>
@@ -42,10 +43,10 @@
     </tr>
     </tbody>
 </table>
-<a th:href="@{/review/{id}/edit(id=${review.id})}">
+<a th:if="${review.currentUserIsCallerOrAdmin()}" th:href="@{/review/{id}/edit(id=${review.id})}">
     <button>Редактировать</button>
 </a>
-<form th:method="DELETE" th:action="@{/review/{name}(name=${review.id})}">
+<form th:if="${review.currentUserIsCallerOrAdmin()}" th:method="DELETE" th:action="@{/review/{name}(name=${review.id})}">
     <input type="submit" value="Удалить"/>
 </form>
 <div th:replace="fragments/footer :: footer"></div>
