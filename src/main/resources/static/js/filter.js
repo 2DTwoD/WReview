@@ -15,4 +15,4 @@ function main() {
         window.location.href = pathname;
     }, false);
 }
-window.onload = main;
+window.addEventListener('load', main);

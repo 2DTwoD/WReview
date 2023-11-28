@@ -22,7 +22,7 @@ import java.util.Optional;
 
 
 @Controller
-@RequestMapping("/review")
+@RequestMapping("/reviews")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class ReviewController implements PaginationFilterEngine {
@@ -88,13 +88,13 @@ public class ReviewController implements PaginationFilterEngine {
     @PostMapping("")
     public String addPost(@ModelAttribute("review") @Valid Review review, BindingResult bindingResult, Model model) {
 
-        checkWorkerNameAndAddWorkersInModel(review.getWorker(), model, bindingResult);
+        extendValidationConditions(review, model, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "review/add";
         }
         reviewService.save(review);
-        return "redirect:/review";
+        return "redirect:/reviews";
     }
 
     @GetMapping("/{id}")
@@ -131,10 +131,9 @@ public class ReviewController implements PaginationFilterEngine {
             return "redirect:/error";
         }
 
-        checkWorkerNameAndAddWorkersInModel(review.getWorker(), model, bindingResult);
+        extendValidationConditions(review, model, bindingResult);
 
-        if (!CurrentUserInfo.currentUserIsAdmin() &&
-                !CurrentUserInfo.userIsCurrent(reviewForUpdate.get().getCaller().getUsername())) {
+        if (!CurrentUserInfo.currentUserIsAdmin() && !CurrentUserInfo.userIsCurrent(review.getCaller().getUsername())) {
             bindingResult.rejectValue("caller.username", "",
                     "У вас нет права редактировать отзыв");
         }
@@ -144,7 +143,7 @@ public class ReviewController implements PaginationFilterEngine {
         }
         reviewService.update(id, review);
 
-        return "redirect:/review";
+        return "redirect:/reviews";
     }
 
     @DeleteMapping("/{id}")
@@ -154,14 +153,19 @@ public class ReviewController implements PaginationFilterEngine {
             return "redirect:/error";
         }
         reviewService.delete(review.get());
-        return "redirect:/review";
+        return "redirect:/reviews";
     }
 
-    private void checkWorkerNameAndAddWorkersInModel(Person worker, Model model, BindingResult bindingResult){
-        Optional<Person> person = personService.findWorkerByUsername(worker.getUsername());
-        if (person.isEmpty() || person.get().currentUserIsMe()){
+    private void extendValidationConditions(Review review, Model model, BindingResult bindingResult){
+        Optional<Person> person = personService.findWorkerByUsername(review.getWorker().getUsername());
+        if (person.isEmpty() || review.callerAndWorkerSame()){
             model.addAttribute("workers", personService.findWorkers());
             bindingResult.rejectValue("worker.username", "","Введите имя рабочего правильно");
+        }
+        int rating = review.getRating() == null? 0: review.getRating();
+        if(!review.isWorkDone() && rating > 5){
+            bindingResult.rejectValue("rating", "",
+                    "Если работа не выполнена, рейтинг не может быть выше 5");
         }
     }
 }

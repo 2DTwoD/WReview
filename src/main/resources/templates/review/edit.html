@@ -1,62 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Правка отзыва</title>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<form th:method="PATCH" th:action="@{/review/{id}(id=${review.id})}" th:object="${review}">
-    <label for="caller">Заказчик: </label>
-    <input type="text" th:field="*{caller.username}" id="caller" readonly/>
-    <div style="color:red" th:if="${#fields.hasErrors('caller.username')}" th:errors="*{caller.username}"></div>
-    <br/>
+<form th:method="PATCH" th:action="@{/reviews/{id}(id=${review.id})}" th:object="${review}">
+    <table>
+        <tbody>
+        <tr>
+            <td class="right_align"><label for="caller">Заказчик:</label></td>
+            <td><input type="text" th:field="*{caller.username}" id="caller" readonly/></td>
+        </tr>
 
-    <label for="timestamp">Дата оформления отзыва: </label>
-    <input type="text" th:field="*{timestamp}" id="timestamp" readonly/>
-    <br/>
+        <tr>
+            <td class="right_align"><label for="timestamp">Дата оформления отзыва:</label></td>
+            <td><input type="text" th:field="*{timestamp}" id="timestamp" readonly/></td>
+        </tr>
 
-    <label for="equipment">Название оборудования: </label>
-    <input type="text" th:field="*{equipment}" id="equipment"/>
-    <div style="color:red" th:if="${#fields.hasErrors('equipment')}" th:errors="*{equipment}"></div>
-    <br/>
+        <tr>
+            <td class="right_align"><label for="equipment">Название оборудования:</label></td>
+            <td><input type="text" th:field="*{equipment}" id="equipment"/></td>
+        </tr>
+        <tr th:if="${#fields.hasErrors('equipment')}">
+            <td colspan="2" class="error_line center_align" th:errors="*{equipment}"></td>
+        </tr>
 
-    <label for="reason">Причина вызова: </label>
-    <textarea rows="5" cols="100" th:field="*{reason}" id="reason"></textarea>
-    <div style="color:red" th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></div>
-    <br/>
+        <tr>
+            <td class="right_align"><label for="reason">Причина вызова:</label></td>
+            <td><textarea rows="5" cols="30" th:field="*{reason}" id="reason"></textarea></td>
+        </tr>
+        <tr th:if="${#fields.hasErrors('reason')}">
+            <td colspan="2" class="error_line center_align" th:errors="*{reason}"></td>
+        </tr>
 
-    <label for="worker">Имя рабочего: </label>
-    <input type="text" list="worker_list" id="worker" th:field="*{worker.username}">
-    <datalist id="worker_list">
-        <option th:each="w: ${workers}" th:text="${w.username}">
-    </datalist>
-    <div style="color:red" th:if="${#fields.hasErrors('worker.username')}" th:errors="*{worker.username}"></div>
-    <br/>
+        <tr>
+            <td class="right_align"><label for="worker">Имя рабочего:</label></td>
+            <td>
+                <input type="text" list="worker_list" id="worker" th:field="*{worker.username}">
+                <datalist id="worker_list">
+                    <option th:each="w: ${workers}" th:text="${w.username}">
+                </datalist>
+            </td>
+        </tr>
+        <tr th:if="${#fields.hasErrors('worker.username')}">
+            <td colspan="2" class="error_line center_align" th:errors="*{worker.username}"></td>
+        </tr>
 
-    <label for="workDone">Работа выполнена: </label>
-    <input type="checkbox" th:field="*{workDone}" id="workDone"/>
-    <div style="color:red" th:if="${#fields.hasErrors('workDone')}" th:errors="*{workDone}"></div>
-    <br/>
+        <tr>
+            <td class="right_align"><label for="workDone">Работа выполнена:</label></td>
+            <td><input type="checkbox" th:field="*{workDone}" id="workDone"/></td>
+        </tr>
 
-    <label for="comment">Комментарий: </label>
-    <textarea rows="5" cols="100" th:field="*{comment}" id="comment"></textarea>
-    <div style="color:red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
-    <br/>
+        <tr>
+            <td class="right_align"><label for="comment">Комментарий:</label></td>
+            <td><textarea rows="5" cols="30" th:field="*{comment}" id="comment"></textarea></td>
+        </tr>
+        <tr th:if="${#fields.hasErrors('comment')}">
+            <td colspan="2" class="error_line center_align" th:errors="*{comment}"></td>
+        </tr>
 
-    <label for="rating">Оценка рабочего: </label>
-    <input list="rating_list" id="rating" th:field="*{rating}">
-    <datalist id="rating_list">
-        <option th:each="i: ${#numbers.sequence(0, 10)}" th:text="${i}">
-    </datalist>
-    <div style="color:red" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
-    <br/>
+        <tr>
+            <td class="right_align"><label for="rating">Оценка рабочего:</label></td>
+            <td><input type="number" id="rating" th:field="*{rating}"></td>
+        </tr>
+        <tr th:if="${#fields.hasErrors('rating')}">
+            <td colspan="2" class="error_line center_align" th:errors="*{rating}"></td>
+        </tr>
 
-    <input type="submit" value="Редактировать"/>
+        <tr>
+            <td colspan="2"><input type="submit" value="Редактировать"/></td>
+        </tr>
+        </tbody>
+    </table>
 </form>
-<form th:if="${review.currentUserIsCallerOrAdmin()}" th:method="DELETE" th:action="@{/review/{name}(name=${review.id})}">
+<form th:if="${review.currentUserIsCallerOrAdmin()}" th:method="DELETE" th:action="@{/reviews/{name}(name=${review.id})}">
     <input type="submit" value="Удалить"/>
 </form>
+<div th:replace="fragments/back_button :: back_button"></div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

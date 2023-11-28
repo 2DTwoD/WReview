@@ -41,16 +41,24 @@
     </tr>
     <tr>
         <td>Рейтинг:</td>
-        <td th:text="${person.getRating()}"></td>
+        <td th:text="${person.getStringRating()}"></td>
+    </tr>
+    <tr sec:authorize="isAuthenticated()">
+        <td>Разрешен:</td>
+        <td th:text="${person.isEnabled()}"></td>
     </tr>
     </tbody>
 </table>
-<a th:if="${person.iamWorker && person.currentUserNotMe()}" th:href="@{/review/add?workerName={name}(name=${person.getUsername()})}">
+<a th:if="${person.iamWorker && person.currentUserNotMe()}" sec:authorize="isAuthenticated()" th:href="@{/reviews/add?workerName={name}(name=${person.getUsername()})}">
     <button>Написать отзыв</button>
 </a>
-<form sec:authorize="hasRole('ADMIN')" th:method="DELETE" th:action="@{/person/{name}(name=${person.username})}">
+<form sec:authorize="hasRole('ADMIN')" th:method="DELETE" th:action="@{/persons/{name}(name=${person.username})}">
     <input type="submit" value="Удалить"/>
 </form>
+<form sec:authorize="hasRole('ADMIN')" th:method="PATCH" th:action="@{/persons/{name}/block(name=${person.username})}">
+    <input type="submit" value="Запретить/разрешить"/>
+</form>
+<div th:replace="fragments/back_button :: back_button"></div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

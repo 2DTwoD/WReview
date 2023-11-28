@@ -17,9 +17,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
                 authorizeHttpRequests(request -> request
-                                .anyRequest().permitAll()
+//                                .anyRequest().permitAll()
                         //.requestMatchers("/test").hasAnyRole("ADMIN", "USER")
 //                        .anyRequest().authenticated()
+                                .requestMatchers("/**","/**/*.js", "/**/*.css").permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")

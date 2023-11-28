@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Лучший работник</title>
     <link th:href="@{css/main.css}" rel="stylesheet" />
-    <script type="text/javascript" th:src="@{/js/test.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -20,9 +19,9 @@
     <tbody>
     <tr th:each="person : ${persons}">
         <td th:text="${person.getUsername()}"></td>
-        <td th:text="${person.getRating()}"></td>
+        <td th:text="${person.getStringRating()}"></td>
         <td th:text="${person.getNumOfCalcReviews()}"></td>
-        <td><a th:href="@{/person/{name}(name=${person.getUsername()})}">Подробнее</a></td>
+        <td><a th:href="@{/persons/{name}(name=${person.getUsername()})}">Подробнее</a></td>
     </tr>
     <tr th:if="${persons.isEmpty()}">
         <td colspan="4">Нет записей</td>

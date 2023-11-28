@@ -73,6 +73,14 @@ public class PersonService {
     }
 
     @Transactional
+    public void block(String name){
+        personRepository.findByUsername(name).ifPresent(p -> {
+            p.setEnabled(!p.isEnabled());
+            personRepository.save(p);
+        });
+    }
+
+    @Transactional
     public void delete(Person person){
         personRepository.delete(person);
     }

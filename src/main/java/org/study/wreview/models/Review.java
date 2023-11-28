@@ -1,10 +1,7 @@
 package org.study.wreview.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,6 @@ import java.util.Date;
 @Entity
 @ToString
 @NoArgsConstructor
-@EqualsAndHashCode
 @Table(name = "reviews")
 public class Review {
     @Id
@@ -50,11 +46,13 @@ public class Review {
     @Column(name = "work_done")
     boolean workDone;
 
+    @Size(max = 500, message = "Поле 'комментарий' должно содержать не более 500 символов")
     String comment;
 
     @Min(value = 0, message = "Оценка не должна быть ниже 0")
     @Max(value = 10, message = "Оценка не должна быть выше 10")
-    int rating;
+    @NotNull(message = "Это поле не должно быть пустым")
+    Integer rating;
 
     public String getBeautyTimestamp(){
         return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(getTimestamp());
@@ -65,5 +63,9 @@ public class Review {
     }
     public boolean currentUserIsCallerOrAdmin(){
         return CurrentUserInfo.currentUserIsAdmin() || CurrentUserInfo.getUsername().equals(getCaller().getUsername());
+    }
+
+    public boolean callerAndWorkerSame(){
+        return getWorker().getUsername().equals(getCaller().getUsername());
     }
 }

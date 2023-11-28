@@ -1,9 +1,7 @@
 package org.study.wreview.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -34,12 +32,14 @@ public class Person {
     private Date birthday;
 
     @NotEmpty(message = "Поле 'телефон' не должно быть пустым")
+    @Size(max = 20, message = "Поле 'телефон' должно содержать не более 20 символов")
     String phone;
 
     @Column(name = "i_am_worker")
     boolean iamWorker;
 
     @Column(name = "service_description")
+    @Size(max = 20, message = "Поле 'описание услуг' должно содержать не более 500 символов")
     String serviceDescription;
 
     @Column(name = "experience_date")
@@ -47,7 +47,9 @@ public class Person {
     @Temporal(TemporalType.DATE)
     private Date experienceDate;
 
-    int price;
+    @Min(value = 0, message = "Поле 'цена услуги' не может быть ниже 0")
+    @Max(value = 1000000, message = "Поле 'цена услуги' не может быть выше 1 000 000")
+    Integer price;
 
     boolean enabled;
 
@@ -83,16 +85,19 @@ public class Person {
         return DateUtils.getDuration(birthday);
     }
 
-    public String getRating(){
-        if(reviewsOnMe == null){
-            return new DecimalFormat("#0.0#").format(0.0);
-        }
+    public Double getRating(){
         if (rating == null){
             rating = reviewsOnMe.stream()
                     .filter(review -> review.getTimestamp().after(DateUtils.getDateAgo()))
                     .mapToDouble(Review::getRating).average().orElse(0.0);
         }
-        return new DecimalFormat("#0.0#").format(rating);
+        return rating;
+    }
+    public String getStringRating(){
+        if(reviewsOnMe == null){
+            return new DecimalFormat("#0.0#").format(0.0);
+        }
+        return new DecimalFormat("#0.0#").format(getRating());
     }
     public long getNumOfCalcReviews(){
         if(reviewsOnMe == null){
@@ -117,5 +122,13 @@ public class Person {
 
     public boolean currentUserNotMe(){
         return !currentUserIsMe();
+    }
+
+    public boolean isAdmin(){
+        return getRole().equals("ROLE_ADMIN");
+    }
+
+    public boolean isUser(){
+        return getRole().equals("ROLE_USER");
     }
 }

@@ -21,7 +21,7 @@ import org.study.wreview.utils.Sorting;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/person")
+@RequestMapping("/persons")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PersonController implements PaginationFilterEngine {
@@ -67,15 +67,27 @@ public class PersonController implements PaginationFilterEngine {
     }
 
     @DeleteMapping("/{name}")
-    public String info(@PathVariable("name") String name){
+    public String delete(@PathVariable("name") String name){
         Optional<Person> person = personService.findWorkerByUsername(CurrentUserInfo.getUsername());
-        if(person.isEmpty() || !person.get().getRole().equals("ROLE_ADMIN")){
+        if(person.isEmpty() || !person.get().isAdmin()){
             return "redirect:/error";
         }
         personService.findByUsername(name)
-                .filter(p -> p.getRole().equals("ROLE_USER"))
+                .filter(Person::isUser)
                 .ifPresent(personService::delete);
-        return "redirect:/person";
+        return "redirect:/persons";
+    }
+
+    @PatchMapping("/{name}/block")
+    public String block(@PathVariable("name") String name){
+        Optional<Person> person = personService.findWorkerByUsername(name);
+        if(person.isEmpty() || person.get().isAdmin()){
+            return "redirect:/error";
+        }
+        personService.findByUsername(name)
+                .filter(Person::isUser)
+                .ifPresent(p -> personService.block(name));
+        return "redirect:/persons";
     }
 
     @GetMapping("/edit")
@@ -98,7 +110,7 @@ public class PersonController implements PaginationFilterEngine {
             return "person/edit";
         }
         personService.update(CurrentUserInfo.getUsername(), person);
-        return "redirect:/person/edit";
+        return "redirect:/persons/edit";
     }
 
     @GetMapping("/edit_pass")
@@ -113,11 +125,11 @@ public class PersonController implements PaginationFilterEngine {
     @PatchMapping("/edit_pass")
     public String editPassPatch(@ModelAttribute("password") NewPassword password,
                                 BindingResult bindingResult){
-        Person personForUpdate = personService.findByUsername(CurrentUserInfo.getUsername()).orElse(null);
-        if(personForUpdate == null) {
+        Optional<Person> personForUpdate = personService.findByUsername(CurrentUserInfo.getUsername());
+        if(personForUpdate.isEmpty()) {
             return "redirect:/error";
         }
-        if(!passwordEncoder.matches(password.oldPassword(), personForUpdate.getPassword())){
+        if(!passwordEncoder.matches(password.oldPassword(), personForUpdate.get().getPassword())){
             bindingResult.rejectValue("oldPassword", "", "Неправильный пароль!");
         }
         if(!password.newPassword().equals(password.confirmPassword())){
@@ -127,9 +139,9 @@ public class PersonController implements PaginationFilterEngine {
         if(bindingResult.hasErrors()){
             return "person/edit_pass";
         }
-        personForUpdate.setPassword(passwordEncoder.encode(password.newPassword()));
-        personService.save(personForUpdate);
-        return "redirect:/person/edit";
+        personForUpdate.get().setPassword(passwordEncoder.encode(password.newPassword()));
+        personService.save(personForUpdate.get());
+        return "redirect:/persons/edit";
     }
 
 }

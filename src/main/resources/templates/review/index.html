@@ -35,18 +35,18 @@
         </td>
         <td th:text="${review.getSmallComment()}"></td>
         <td th:text="${review.rating}"></td>
-        <td><a th:href="@{/review/{id}(id=${review.getId()})}">Подробнее</a></td>
-        <td><a th:if="${review.currentUserIsCallerOrAdmin()}" th:href="@{/review/{id}/edit(id=${review.getId()})}">Редактировать</a></td>
+        <td><a th:href="@{/reviews/{id}(id=${review.getId()})}">Подробнее</a></td>
+        <td><a th:if="${review.currentUserIsCallerOrAdmin()}" th:href="@{/reviews/{id}/edit(id=${review.getId()})}">Редактировать</a></td>
     </tr>
     <tr th:if="${reviews.isEmpty()}">
         <td colspan="10">Нет записей</td>
     </tr>
     </tbody>
 </table>
-<a th:href="@{/review/add}">
-    <button>Добавить отзыв</button>
-</a>
 <div th:replace="fragments/pagination :: pagination"></div>
 <div th:replace="fragments/footer :: footer"></div>
+<a th:href="@{/reviews/add}">
+    <button>Добавить отзыв</button>
+</a>
 </body>
 </html>

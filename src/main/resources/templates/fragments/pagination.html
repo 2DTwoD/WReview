@@ -6,11 +6,19 @@
 </head>
 <body>
 <div th:fragment="pagination">
+    <script type="text/javascript" th:src="@{/js/pagination.js}"></script>
     <span th:if="${currentPage > 0}">
-        <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage - 1}, filt=${filter})}"> << </a>
+        <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage - 1}, filt=${filter})}">
+            <<
+        </a>
     </span>
+    <select id="selectPage">
+        <option th:each="i: ${#numbers.sequence(1, totalPages + 1)}" th:text="${i}"></option>
+    </select>
     <span th:if="${currentPage < totalPages}">
-        <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage + 1}, filt=${filter})}"> >> </a>
+        <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage + 1}, filt=${filter})}">
+            >>
+        </a>
     </span>
 </div>
 </body>

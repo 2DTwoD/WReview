@@ -7,25 +7,46 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-    <form th:method="PATCH" th:action="@{/person/edit_pass}" th:object="${password}">
-        <div>Имя: <span sec:authentication="name"></span></div>
-        <label for="oldPassword">Старый пароль: </label>
-        <input type="password" th:field="*{oldPassword}" id="oldPassword"/>
-        <div style="color:red" th:if="${#fields.hasErrors('oldPassword')}" th:errors="*{oldPassword}"></div>
-        <br/>
-        <label for="newPassword">Новый пароль: </label>
-        <input type="password" th:field="*{newPassword}" id="newPassword"/>
-        <div style="color:red" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></div>
-        <br/>
-        <label for="confirmPassword">Подтвердите пароль: </label>
-        <input type="password" th:field="*{confirmPassword}" id="confirmPassword"/>
-        <div style="color:red" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
-        <br/>
-        <input type="submit" value="Изменить"/>
+    <form th:method="PATCH" th:action="@{/persons/edit_pass}" th:object="${password}">
+        <table>
+            <tbody>
+            <tr>
+                <td colspan="2" class="center_align">Ф.И.О.: <span sec:authentication="name"></span></td>
+            </tr>
+
+            <tr>
+                <td class="right_align"><label for="oldPassword">Старый пароль: </label></td>
+                <td><input type="password" th:field="*{oldPassword}" id="oldPassword"/></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('oldPassword')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{oldPassword}"></td>
+            </tr>
+
+            <tr>
+                <td class="right_align"><label for="newPassword">Новый пароль: </label></td>
+                <td><input type="password" th:field="*{newPassword}" id="newPassword"/></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('newPassword')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{newPassword}"></td>
+            </tr>
+
+            <tr>
+                <td class="right_align"><label for="confirmPassword">Подтвердите пароль: </label></td>
+                <td><input type="password" th:field="*{confirmPassword}" id="confirmPassword"/></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('confirmPassword')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{confirmPassword}"></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="center_align"><input type="submit" value="Изменить"/></td>
+            </tr>
+            </tbody>
+        </table>
+
+
     </form>
-    <a th:href="@{/person/edit}">
-        <button>Назад</button>
-    </a>
+<div th:replace="fragments/back_button :: back_button"></div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
