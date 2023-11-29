@@ -5,23 +5,24 @@
     <title>Правка отзыва</title>
 </head>
 <body>
+<div id="substrate">
 <div th:replace="fragments/header :: header"></div>
 <form th:method="PATCH" th:action="@{/reviews/{id}(id=${review.id})}" th:object="${review}">
     <table>
         <tbody>
         <tr>
             <td class="right_align"><label for="caller">Заказчик:</label></td>
-            <td><input type="text" th:field="*{caller.username}" id="caller" readonly/></td>
+            <td class="left_align"><input type="text" th:field="*{caller.username}" id="caller" readonly/></td>
         </tr>
 
         <tr>
             <td class="right_align"><label for="timestamp">Дата оформления отзыва:</label></td>
-            <td><input type="text" th:field="*{timestamp}" id="timestamp" readonly/></td>
+            <td class="left_align"><input type="text" th:field="*{timestamp}" id="timestamp" readonly/></td>
         </tr>
 
         <tr>
             <td class="right_align"><label for="equipment">Название оборудования:</label></td>
-            <td><input type="text" th:field="*{equipment}" id="equipment"/></td>
+            <td class="left_align"><input type="text" th:field="*{equipment}" id="equipment"/></td>
         </tr>
         <tr th:if="${#fields.hasErrors('equipment')}">
             <td colspan="2" class="error_line center_align" th:errors="*{equipment}"></td>
@@ -29,7 +30,7 @@
 
         <tr>
             <td class="right_align"><label for="reason">Причина вызова:</label></td>
-            <td><textarea rows="5" cols="30" th:field="*{reason}" id="reason"></textarea></td>
+            <td class="left_align"><textarea rows="5" cols="30" th:field="*{reason}" id="reason"></textarea></td>
         </tr>
         <tr th:if="${#fields.hasErrors('reason')}">
             <td colspan="2" class="error_line center_align" th:errors="*{reason}"></td>
@@ -37,7 +38,7 @@
 
         <tr>
             <td class="right_align"><label for="worker">Имя рабочего:</label></td>
-            <td>
+            <td class="left_align">
                 <input type="text" list="worker_list" id="worker" th:field="*{worker.username}">
                 <datalist id="worker_list">
                     <option th:each="w: ${workers}" th:text="${w.username}">
@@ -50,12 +51,12 @@
 
         <tr>
             <td class="right_align"><label for="workDone">Работа выполнена:</label></td>
-            <td><input type="checkbox" th:field="*{workDone}" id="workDone"/></td>
+            <td class="left_align"><input class="checkbox" type="checkbox" th:field="*{workDone}" id="workDone"/></td>
         </tr>
 
         <tr>
             <td class="right_align"><label for="comment">Комментарий:</label></td>
-            <td><textarea rows="5" cols="30" th:field="*{comment}" id="comment"></textarea></td>
+            <td class="left_align"><textarea rows="5" cols="30" th:field="*{comment}" id="comment"></textarea></td>
         </tr>
         <tr th:if="${#fields.hasErrors('comment')}">
             <td colspan="2" class="error_line center_align" th:errors="*{comment}"></td>
@@ -63,22 +64,23 @@
 
         <tr>
             <td class="right_align"><label for="rating">Оценка рабочего:</label></td>
-            <td><input type="number" id="rating" th:field="*{rating}"></td>
+            <td class="left_align"><input type="number" id="rating" th:field="*{rating}"></td>
         </tr>
         <tr th:if="${#fields.hasErrors('rating')}">
             <td colspan="2" class="error_line center_align" th:errors="*{rating}"></td>
         </tr>
 
         <tr>
-            <td colspan="2"><input type="submit" value="Редактировать"/></td>
+            <td colspan="2"><input class="submitButton" type="submit" value="Редактировать"/></td>
         </tr>
         </tbody>
     </table>
 </form>
 <form th:if="${review.currentUserIsCallerOrAdmin()}" th:method="DELETE" th:action="@{/reviews/{name}(name=${review.id})}">
-    <input type="submit" value="Удалить"/>
+    <input class="submitButton" type="submit" value="Удалить"/>
 </form>
 <div th:replace="fragments/back_button :: back_button"></div>
 <div th:replace="fragments/footer :: footer"></div>
+</div>
 </body>
 </html>

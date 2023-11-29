@@ -6,40 +6,41 @@
     <title>Отзыв подробнее</title>
 </head>
 <body>
+<div id="substrate">
 <div th:replace="fragments/header :: header"></div>
 <table>
     <tbody>
     <tr>
-        <td>Заказчик: </td>
-        <td th:text="${review.getCaller().getUsername()}"></td>
+        <td class="right_align">Заказчик: </td>
+        <td class="left_align" th:text="${review.getCaller().getUsername()}"></td>
     </tr>
     <tr>
-        <td>Дата оформления отзыва: </td>
-        <td th:text="${review.getBeautyTimestamp()}"></td>
+        <td class="right_align">Дата оформления отзыва: </td>
+        <td class="left_align" th:text="${review.getBeautyTimestamp()}"></td>
     </tr>
     <tr>
-        <td>Название оборудования: </td>
-        <td th:text="${review.getEquipment()}"></td>
+        <td class="right_align">Название оборудования: </td>
+        <td class="left_align" th:text="${review.getEquipment()}"></td>
     </tr>
     <tr>
-        <td>Причина вызова: </td>
-        <td th:text="${review.getReason()}"></td>
+        <td class="right_align">Причина вызова: </td>
+        <td class="left_align" th:text="${review.getReason()}"></td>
     </tr>
     <tr>
-        <td>Имя рабочего: </td>
-        <td th:text="${review.getWorker().getUsername()}"></td>
+        <td class="right_align">Имя рабочего: </td>
+        <td class="left_align" th:text="${review.getWorker().getUsername()}"></td>
     </tr>
     <tr>
-        <td>Работа выполнена: </td>
-        <td><span th:if="${review.workDone}">Да</span><span th:unless="${review.workDone}">Нет</span></td>
+        <td class="right_align">Работа выполнена: </td>
+        <td class="left_align"><span th:if="${review.workDone}">Да</span><span th:unless="${review.workDone}">Нет</span></td>
     </tr>
     <tr>
-        <td>Комментарий: </td>
-        <td th:text="${review.getComment()}"></td>
+        <td class="right_align">Комментарий: </td>
+        <td class="left_align" th:text="${review.getComment()}"></td>
     </tr>
     <tr>
-        <td>Оценка рабочего: </td>
-        <td th:text="${review.getRating()}"></td>
+        <td class="right_align">Оценка рабочего: </td>
+        <td class="left_align" th:text="${review.getRating()}"></td>
     </tr>
     </tbody>
 </table>
@@ -47,9 +48,10 @@
     <button>Редактировать</button>
 </a>
 <form th:if="${review.currentUserIsCallerOrAdmin()}" th:method="DELETE" th:action="@{/reviews/{name}(name=${review.id})}">
-    <input type="submit" value="Удалить"/>
+    <input class="submitButton" type="submit" value="Удалить"/>
 </form>
 <div th:replace="fragments/back_button :: back_button"></div>
 <div th:replace="fragments/footer :: footer"></div>
+</div>
 </body>
 </html>

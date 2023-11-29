@@ -6,27 +6,56 @@
     <title>Header</title>
 </head>
 <body>
-<div th:fragment="header">
+<div th:fragment="header" id="header">
+    <hr/>
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/header_text.js}"></script>
-    <div>Лучший работник года</div>
-        <a sec:authorize="isAnonymous()" th:href="@{/login}"><button>Войти</button></a>
-        <a sec:authorize="isAnonymous()" th:href="@{/registration}"><button>Регистрация</button></a>
-        <span sec:authorize="isAuthenticated()" sec:authentication="principal.username"></span>
-        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST" style="display: inline;">
-            <input type="submit" value="Выйти" />
-        </form>
-
-        <a sec:authorize="isAuthenticated()" th:href="@{/persons/edit}"><button>Мои настройки</button></a>
-        <a th:href="@{/}"><button>Рейтинг рабочих</button></a>
-        <a sec:authorize="isAuthenticated()" th:href="@{/persons/workers}"><button>Список всех рабочих</button></a>
-        <a sec:authorize="hasRole('ADMIN')" th:href="@{/persons}"><button>Список всех пользователей</button></a>
-        <a sec:authorize="isAuthenticated()" th:href="@{/reviews}"><button>Все отзывы</button></a>
-        <a sec:authorize="isAuthenticated()" th:href="@{/reviews/my}"><button>Мои отзывы</button></a>
-        <a sec:authorize="isAuthenticated()" th:href="@{/reviews/on_me}"><button>Отзывы на меня</button></a>
-        <a sec:authorize="isAuthenticated()" th:href="@{/reviews/add}"><button>Добавить отзыв</button></a>
+    <div style="text-align: center; margin: auto">
+        <span id="mainTitle">Отзовик</span>
+        <div>
+            <img src="/img/smiles.png" alt="" id="smiles">
+        </div>
+    </div>
+    <hr/>
+    <a sec:authorize="isAnonymous()" th:href="@{/login}">
+        <button class="headerButton submitButton">Войти</button>
+    </a>
+    <a sec:authorize="isAnonymous()" th:href="@{/registration}">
+        <button class="headerButton submitButton">Регистрация</button>
+    </a>
+    <span id="loginInfo" sec:authorize="isAuthenticated()">Вы вошли как:
+        <span sec:authentication="principal.username" style="color: #F2F2F2"></span>
+    </span>
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST" style="display: inline;">
+        <input type="submit" value="Выйти"  class="headerButton submitButton"/>
+    </form>
+    <a sec:authorize="isAuthenticated()" th:href="@{/persons/edit}">
+        <button class="headerButton submitButton">Мои настройки</button>
+    </a>
+    <hr/>
+    <a th:href="@{/}">
+        <button class="headerButton">Рейтинг<br/>рабочих</button>
+    </a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/persons/workers}">
+        <button class="headerButton submitButton">Список<br/>рабочих</button>
+    </a>
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/persons}">
+        <button class="headerButton submitButton">Список<br/>пользователей</button>
+    </a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/reviews}">
+        <button class="headerButton submitButton">Все<br/>отзывы</button>
+    </a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/reviews/my}">
+        <button class="headerButton submitButton">Мои<br/>отзывы</button>
+    </a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/reviews/on_me}">
+        <button class="headerButton submitButton">Отзывы<br/>на меня</button>
+    </a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/reviews/add}">
+        <button class="headerButton submitButton">Добавить<br/>отзыв</button>
+    </a>
+    <hr/>
     <div id="pageTitle"></div>
 </div>
-
 </body>
 </html>

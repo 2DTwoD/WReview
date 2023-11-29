@@ -9,15 +9,15 @@
     <script type="text/javascript" th:src="@{/js/pagination.js}"></script>
     <span th:if="${currentPage > 0}">
         <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage - 1}, filt=${filter})}">
-            <<
+            <button><<</button>
         </a>
     </span>
-    <select id="selectPage">
+    <select id="selectPage" th:if="${totalPages > 0}">
         <option th:each="i: ${#numbers.sequence(1, totalPages + 1)}" th:text="${i}"></option>
     </select>
     <span th:if="${currentPage < totalPages}">
         <a th:href="@{{url}?pageNum={num}&filter={filt}(url=${param.query}, num=${currentPage + 1}, filt=${filter})}">
-            >>
+            <button>>></button>
         </a>
     </span>
 </div>

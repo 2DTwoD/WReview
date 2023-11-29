@@ -6,6 +6,7 @@
     <title>Редактировать пользователя</title>
 </head>
 <body>
+<div id="substrate">
 <div th:replace="fragments/header :: header"></div>
     <form th:method="PATCH" th:action="@{/persons/edit_pass}" th:object="${password}">
         <table>
@@ -16,7 +17,7 @@
 
             <tr>
                 <td class="right_align"><label for="oldPassword">Старый пароль: </label></td>
-                <td><input type="password" th:field="*{oldPassword}" id="oldPassword"/></td>
+                <td class="left_align"><input type="password" th:field="*{oldPassword}" id="oldPassword"/></td>
             </tr>
             <tr th:if="${#fields.hasErrors('oldPassword')}">
                 <td colspan="2" class="error_line center_align" th:errors="*{oldPassword}"></td>
@@ -24,7 +25,7 @@
 
             <tr>
                 <td class="right_align"><label for="newPassword">Новый пароль: </label></td>
-                <td><input type="password" th:field="*{newPassword}" id="newPassword"/></td>
+                <td class="left_align"><input type="password" th:field="*{newPassword}" id="newPassword"/></td>
             </tr>
             <tr th:if="${#fields.hasErrors('newPassword')}">
                 <td colspan="2" class="error_line center_align" th:errors="*{newPassword}"></td>
@@ -32,21 +33,20 @@
 
             <tr>
                 <td class="right_align"><label for="confirmPassword">Подтвердите пароль: </label></td>
-                <td><input type="password" th:field="*{confirmPassword}" id="confirmPassword"/></td>
+                <td class="left_align"><input type="password" th:field="*{confirmPassword}" id="confirmPassword"/></td>
             </tr>
             <tr th:if="${#fields.hasErrors('confirmPassword')}">
                 <td colspan="2" class="error_line center_align" th:errors="*{confirmPassword}"></td>
             </tr>
 
             <tr>
-                <td colspan="2" class="center_align"><input type="submit" value="Изменить"/></td>
+                <td colspan="2" class="center_align"><input class="submitButton" type="submit" value="Изменить"/></td>
             </tr>
             </tbody>
         </table>
-
-
     </form>
 <div th:replace="fragments/back_button :: back_button"></div>
 <div th:replace="fragments/footer :: footer"></div>
+</div>
 </body>
 </html>

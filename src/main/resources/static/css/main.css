@@ -1,8 +1,26 @@
+body {
+    font-family: "Comic Sans MS", serif;
+    background: #F2F2F2;
+}
 textarea {
     resize: none;
+    font-size: 14px;
+    font-family: "Comic Sans MS", serif;
 }
-.error_line{
-    color: red;
+input {
+    font-size: 14px;
+    font-family: "Comic Sans MS", serif;
+}
+a{
+    text-decoration: none;
+}
+#substrate{
+    width: fit-content;
+    max-width: 80%;
+    background: #A78B71;
+    margin: auto;
+    text-align: center;
+    border-radius: 15px;
 }
 .left_align{
     text-align: left;
@@ -13,11 +31,102 @@ textarea {
 .center_align{
     text-align: center;
 }
-body {
-    margin: 0 auto;
-    text-align: center
+button, .submitButton{
+    background-color: #F4DD45;
+    border-radius: 5px;
+    border: none;
+    color: black;
+    padding: 2px 20px;
+    margin: 5px auto;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Comic Sans MS", serif;
+    font-weight: bold;
+    width: auto;
 }
-table{
-    margin-left: auto;
-    margin-right: auto;
+.headerButton{
+    background-color: #583E26;
+    border-radius: 5px;
+    border: none;
+    color: #f2f2f2;
+    padding: 5px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    font-family: "Comic Sans MS", serif;
+}
+button:hover, .submitButton:hover {
+    background-color: #EAB14D;
+}
+.headerButton:hover {
+    background-color: #23170f;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: separate;
+    border-radius: 10px;
+    margin: 10px auto;
+    border: 3px solid #f2f2f2;
+    table-layout: fixed;
+    width: 90%;
+}
+.checkbox{
+    width: 20px;
+    height: 20px;
+}
+
+th, td {
+    padding: 8px;
+}
+tr input{
+    width: 100%;
+}
+
+tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+th{
+    background-color: #F4DD45;
+    color: #9C4A1A;
+}
+#smiles{
+    height: 30px;
+}
+#people{
+    height: 100px;
+}
+#pedestal{
+    height: 100px;
+}
+#mainTitle{
+    font-size: 30px;
+    font-weight: bold;
+    color: #f2f2f2;
+    text-shadow: 1px 1px 1px #9C4A1A;
+}
+#header, #footer{
+    padding: 10px;
+}
+
+#pageTitle{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#selectPage{
+    font-family: "Comic Sans MS", serif;
+    font-size: 14px;
+}
+#loginInfo{
+    font-size: 20px;
+}
+
+.error_line{
+    color: #a90000;
+}
+hr{
+    border-top: 1px solid #F2F2F2;
+    border-bottom: 1px solid #9C4A1A;
 }

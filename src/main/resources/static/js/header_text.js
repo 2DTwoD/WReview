@@ -20,6 +20,9 @@ function main() {
         case "/reviews/my":
             pageTitle.innerText = "Мои отзывы";
             break;
+        case "/reviews/add":
+            pageTitle.innerText = "Добавить отзыв";
+            break;
         case "/reviews/on_me":
             pageTitle.innerText = "Отзывы на меня";
             break;
@@ -29,7 +32,8 @@ function main() {
         case "/registration":
             pageTitle.innerText = "Регистрация";
             break;
-
+        default:
+            pageTitle.innerText = "Подробнее";
     }
 }
 window.addEventListener('load', main);

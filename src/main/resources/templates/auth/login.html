@@ -5,6 +5,7 @@
     <title>Авторизация</title>
 </head>
 <body>
+<div id="substrate">
 <div th:replace="fragments/header :: header"></div>
 <form name="f" method="post" action="/process_login">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -12,25 +13,26 @@
         <tbody>
         <tr>
             <td class="right_align"><label for="username">Введите имя пользователя: </label></td>
-            <td><input type="text" name="username" id="username"/></td>
+            <td class="left_align"><input type="text" name="username" id="username"/></td>
         </tr>
 
         <tr>
             <td class="right_align"><label for="password">Введите пароль: </label></td>
-            <td><input type="password" name="password" id="password"/></td>
+            <td class="left_align"><input type="password" name="password" id="password"/></td>
         </tr>
         <tr th:if="${param.error}">
             <td colspan="2" class="error_line center_align">Неправильное имя или пароль</td>
         </tr>
         <tr>
             <td colspan="2" class="center_align">
-                <input type="submit" value="Войти"/>
+                <input class="submitButton" type="submit" value="Войти"/>
             </td>
         </tr>
         </tbody>
     </table>
-
 </form>
 <div th:replace="fragments/back_button :: back_button"></div>
+<div th:replace="fragments/footer :: footer"></div>
+</div>
 </body>
 </html>

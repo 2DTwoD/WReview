@@ -20,7 +20,7 @@ public class WebSecurityConfig {
 //                                .anyRequest().permitAll()
                         //.requestMatchers("/test").hasAnyRole("ADMIN", "USER")
 //                        .anyRequest().authenticated()
-                                .requestMatchers("/**","/**/*.js", "/**/*.css").permitAll()
+                                .requestMatchers("/**","/**/*.js", "/**/*.css", "/**/*.png").permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
