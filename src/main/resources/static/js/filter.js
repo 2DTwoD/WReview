@@ -12,7 +12,9 @@ function main() {
         window.location.href = pathname + '?filter=' + textField.value;
     }, false);
     clearButton.addEventListener("click", function () {
-        window.location.href = pathname;
+        if(confirm("Очистить фильтр?")) {
+            window.location.href = pathname;
+        }
     }, false);
 }
 window.addEventListener('load', main);

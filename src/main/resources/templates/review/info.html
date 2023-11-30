@@ -47,7 +47,7 @@
     <button>Редактировать</button>
 </a>
 <form th:if="${review.currentUserIsCallerOrAdmin()}" th:method="DELETE" th:action="@{/reviews/{name}(name=${review.id})}">
-    <input class="submitButton" type="submit" value="Удалить"/>
+    <input class="submitButton" type="submit" value="Удалить" onclick="return confirm('Удалить отзыв?')"/>
 </form>
 <div th:replace="fragments/back_button :: back_button"></div>
 <div th:replace="fragments/footer :: footer"></div>

@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.study.wreview.models.Person;
 import org.study.wreview.services.PersonService;
-import org.study.wreview.utils.Sorting;
 
 import java.util.List;
 
@@ -24,10 +23,5 @@ public class MainController {
         List<Person> persons = personService.findWorkersWithRating();
         model.addAttribute("persons", persons);
         return "index";
-    }
-
-    @GetMapping("/error")
-    String error(){
-        return "myerror";
     }
 }

@@ -14,6 +14,9 @@
             <td class="right_align"><label for="caller">Заказчик:</label></td>
             <td class="left_align"><input type="text" th:field="*{caller.username}" id="caller" readonly/></td>
         </tr>
+        <tr th:if="${#fields.hasErrors('caller.username')}">
+            <td colspan="2" class="error_line center_align" th:errors="*{caller.username}"></td>
+        </tr>
 
         <tr>
             <td class="right_align"><label for="timestamp">Дата оформления отзыва:</label></td>
@@ -71,13 +74,15 @@
         </tr>
 
         <tr>
-            <td colspan="2"><input class="submitButton" type="submit" value="Редактировать"/></td>
+            <td colspan="2">
+                <input class="submitButton" type="submit" value="Редактировать" onclick="return confirm('Редактировать отзыв?')"/>
+            </td>
         </tr>
         </tbody>
     </table>
 </form>
 <form th:if="${review.currentUserIsCallerOrAdmin()}" th:method="DELETE" th:action="@{/reviews/{name}(name=${review.id})}">
-    <input class="submitButton" type="submit" value="Удалить"/>
+    <input class="submitButton" type="submit" value="Удалить" onclick="return confirm('Удалить отзыв?')"/>
 </form>
 <div th:replace="fragments/back_button :: back_button"></div>
 <div th:replace="fragments/footer :: footer"></div>

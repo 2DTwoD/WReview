@@ -2,10 +2,8 @@ package org.study.wreview.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.study.wreview.utils.CurrentUserInfo;
 
@@ -18,6 +16,7 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @Table(name = "reviews")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

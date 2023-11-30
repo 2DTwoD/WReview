@@ -3,6 +3,7 @@ package org.study.wreview.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,10 +18,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
                 authorizeHttpRequests(request -> request
-//                                .anyRequest().permitAll()
-                        //.requestMatchers("/test").hasAnyRole("ADMIN", "USER")
-//                        .anyRequest().authenticated()
-                                .requestMatchers("/**","/**/*.js", "/**/*.css", "/**/*.png").permitAll()
+                        .requestMatchers("/persons", "persons/*/block").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/persons/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/persons/*").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.PATCH, "/persons/*").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "persons/*").permitAll()
+                        .requestMatchers( "/persons/**", "/reviews/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/", "/login", "/logout", "/registration", "/error",
+                                        "/css/*", "/js/*", "/img/*").permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")

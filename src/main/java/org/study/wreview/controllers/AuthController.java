@@ -1,7 +1,9 @@
 package org.study.wreview.controllers;
 
 import jakarta.validation.Valid;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,10 +17,11 @@ import java.util.Arrays;
 
 @Controller
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthController {
 
-    final private PersonService personService;
-    final private PasswordEncoder passwordEncoder;
+    PersonService personService;
+    PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login(){

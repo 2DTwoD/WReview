@@ -33,6 +33,10 @@ function main() {
             pageTitle.innerText = "Регистрация";
             break;
         default:
+            if(pathname.match(/\w+\/\w+\/edit/)){
+                pageTitle.innerText = "Редактирование";
+                break;
+            }
             pageTitle.innerText = "Подробнее";
     }
 }

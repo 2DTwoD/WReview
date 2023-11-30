@@ -59,7 +59,7 @@ public class PersonController implements PaginationFilterEngine {
 
         Optional<Person> person = personService.findByUsername(name);
         if(person.isEmpty()){
-            return "redirect:/error";
+            return "error";
         }
 
         model.addAttribute("person", person.get());
@@ -70,7 +70,7 @@ public class PersonController implements PaginationFilterEngine {
     public String delete(@PathVariable("name") String name){
         Optional<Person> person = personService.findWorkerByUsername(CurrentUserInfo.getUsername());
         if(person.isEmpty() || !person.get().isAdmin()){
-            return "redirect:/error";
+            return "error";
         }
         personService.findByUsername(name)
                 .filter(Person::isUser)
@@ -82,7 +82,7 @@ public class PersonController implements PaginationFilterEngine {
     public String block(@PathVariable("name") String name){
         Optional<Person> person = personService.findWorkerByUsername(name);
         if(person.isEmpty() || person.get().isAdmin()){
-            return "redirect:/error";
+            return "error";
         }
         personService.findByUsername(name)
                 .filter(Person::isUser)
@@ -94,7 +94,7 @@ public class PersonController implements PaginationFilterEngine {
     public String editGet(Model model){
         Optional<Person> person = personService.findByUsername(CurrentUserInfo.getUsername());
         if(person.isEmpty()) {
-            return "redirect:/error";
+            return "error";
         }
         model.addAttribute("person", person.get());
         return "person/edit";
@@ -104,7 +104,7 @@ public class PersonController implements PaginationFilterEngine {
     public String editPatch(@ModelAttribute("person") @Valid Person person,
                             BindingResult bindingResult){
         if(person.currentUserNotMe()) {
-            return "redirect:/error";
+            return "error";
         }
         if(bindingResult.hasErrors()){
             return "person/edit";
@@ -117,7 +117,7 @@ public class PersonController implements PaginationFilterEngine {
     public String editPassGet(@ModelAttribute("password") NewPassword password){
         Optional<Person> personForUpdate = personService.findByUsername(CurrentUserInfo.getUsername());
         if(personForUpdate.isEmpty()) {
-            return "redirect:/error";
+            return "error";
         }
         return "person/edit_pass";
     }
@@ -127,7 +127,7 @@ public class PersonController implements PaginationFilterEngine {
                                 BindingResult bindingResult){
         Optional<Person> personForUpdate = personService.findByUsername(CurrentUserInfo.getUsername());
         if(personForUpdate.isEmpty()) {
-            return "redirect:/error";
+            return "error";
         }
         if(!passwordEncoder.matches(password.oldPassword(), personForUpdate.get().getPassword())){
             bindingResult.rejectValue("oldPassword", "", "Неправильный пароль!");

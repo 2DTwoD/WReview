@@ -111,7 +111,7 @@ public class ReviewController implements PaginationFilterEngine {
 
         Optional<Review> review = reviewService.findById(id);
         if (review.isEmpty()) {
-            return "redirect:/error";
+            return "error";
         }
 
         model.addAttribute("review", review.get());
@@ -128,7 +128,7 @@ public class ReviewController implements PaginationFilterEngine {
 
         Optional<Review> reviewForUpdate = reviewService.findById(id);
         if (reviewForUpdate.isEmpty()) {
-            return "redirect:/error";
+            return "error";
         }
 
         extendValidationConditions(review, model, bindingResult);
@@ -150,7 +150,7 @@ public class ReviewController implements PaginationFilterEngine {
     public String info(@PathVariable("id") long id){
         Optional<Review> review = reviewService.findById(id);
         if(review.isEmpty() || !review.get().currentUserIsCallerOrAdmin()) {
-            return "redirect:/error";
+            return "error";
         }
         reviewService.delete(review.get());
         return "redirect:/reviews";
