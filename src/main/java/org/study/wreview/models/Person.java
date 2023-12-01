@@ -96,12 +96,14 @@ public class Person {
         }
         return rating;
     }
+
     public String getStringRating(){
         if(reviewsOnMe == null){
             return new DecimalFormat("#0.0#").format(0.0);
         }
         return new DecimalFormat("#0.0#").format(getRating());
     }
+
     public long getNumOfCalcReviews(){
         if(reviewsOnMe == null){
             return 0;

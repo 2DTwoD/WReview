@@ -16,7 +16,6 @@ import org.study.wreview.models.Person;
 import org.study.wreview.services.PersonService;
 import org.study.wreview.utils.CurrentUserInfo;
 import org.study.wreview.utils.PaginationFilterEngine;
-import org.study.wreview.utils.Sorting;
 
 import java.util.Optional;
 

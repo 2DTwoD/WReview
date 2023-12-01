@@ -44,7 +44,7 @@
         <td class="right_align">Рейтинг:</td>
         <td class="left_align" th:text="${person.getStringRating()}"></td>
     </tr>
-    <tr sec:authorize="isAuthenticated()">
+    <tr sec:authorize="hasRole('ADMIN')">
         <td class="right_align">Разрешен:</td>
         <td class="left_align" th:text="${person.isEnabled()}"></td>
     </tr>

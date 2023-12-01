@@ -56,10 +56,27 @@ public class Review {
     public String getBeautyTimestamp(){
         return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(getTimestamp());
     }
-    public String getSmallComment(){
-        String result = comment.substring(0, Math.min(comment.length(), 20));
+
+    public String getShortComment(){
+        return getShortString(getComment());
+    }
+
+    public String getShortReason(){
+        return getShortString(getReason());
+    }
+
+    public String getShortEquipment(){
+         return getShortString(getEquipment());
+    }
+
+    private String getShortString(String str){
+        if (str == null){
+            return "";
+        }
+        String result = str.substring(0, Math.min(str.length(), 20));
         return result.length() == 20? result + "...": result;
     }
+
     public boolean currentUserIsCallerOrAdmin(){
         return CurrentUserInfo.currentUserIsAdmin() || CurrentUserInfo.getUsername().equals(getCaller().getUsername());
     }

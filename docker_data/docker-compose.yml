@@ -1,0 +1,17 @@
+version: "3.5"
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: "wreview_db"
+      POSTGRES_USER: "db_user"
+      POSTGRES_PASSWORD: "1"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./init_script:/docker-entrypoint-initdb.d
+      - wreview:/var/lib/postgresql/data
+    ports:
+      - "5431:5432"
+
+volumes:
+  wreview:
