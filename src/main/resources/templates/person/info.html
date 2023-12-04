@@ -56,7 +56,7 @@
 <form sec:authorize="hasRole('ADMIN')" th:method="DELETE" th:action="@{/persons/{name}(name=${person.username})}">
     <input class="submitButton" type="submit" value="Удалить" onclick="return confirm('Удалить пользователя?')"/>
 </form>
-<form sec:authorize="hasRole('ADMIN')" th:method="PATCH" th:action="@{/persons/{name}/block(name=${person.username})}">
+<form sec:authorize="hasRole('ADMIN')" th:method="PATCH" th:action="@{/persons/{name}/lock(name=${person.username})}">
     <input class="submitButton" type="submit" value="Запретить/разрешить" onclick="return confirm('Вы уверены?')"/>
 </form>
 <div th:replace="fragments/back_button :: back_button"></div>

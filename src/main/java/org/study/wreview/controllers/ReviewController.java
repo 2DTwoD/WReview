@@ -113,7 +113,6 @@ public class ReviewController implements PaginationFilterEngine {
         if (review.isEmpty()) {
             return "error";
         }
-
         model.addAttribute("review", review.get());
         model.addAttribute("workers", personService.findWorkers());
 

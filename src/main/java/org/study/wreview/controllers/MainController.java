@@ -3,8 +3,6 @@ package org.study.wreview.controllers;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +23,5 @@ public class MainController {
         List<Person> persons = personService.findWorkersWithRating();
         model.addAttribute("persons", persons);
         return "index";
-    }
-
-    @GetMapping("/opa")
-    ResponseEntity<Object> index2(Model model){
-        List<Person> persons = personService.findWorkersWithRating();
-        model.addAttribute("persons", persons);
-        return new ResponseEntity<>("index", HttpStatus.OK);
     }
 }

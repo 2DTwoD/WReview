@@ -57,7 +57,7 @@ public class PersonController implements PaginationFilterEngine {
     public String info(@PathVariable("name") String name, Model model){
 
         Optional<Person> person = personService.findByUsername(name);
-        if(person.isEmpty()){
+        if(person.isEmpty()) {
             return "error";
         }
 
@@ -67,7 +67,7 @@ public class PersonController implements PaginationFilterEngine {
 
     @DeleteMapping("/{name}")
     public String delete(@PathVariable("name") String name){
-        Optional<Person> person = personService.findWorkerByUsername(CurrentUserInfo.getUsername());
+        Optional<Person> person = personService.findByUsername(CurrentUserInfo.getUsername());
         if(person.isEmpty() || !person.get().isAdmin()){
             return "error";
         }
@@ -77,9 +77,9 @@ public class PersonController implements PaginationFilterEngine {
         return "redirect:/persons";
     }
 
-    @PatchMapping("/{name}/block")
+    @PatchMapping("/{name}/lock")
     public String block(@PathVariable("name") String name){
-        Optional<Person> person = personService.findWorkerByUsername(name);
+        Optional<Person> person = personService.findByUsername(name);
         if(person.isEmpty() || person.get().isAdmin()){
             return "error";
         }

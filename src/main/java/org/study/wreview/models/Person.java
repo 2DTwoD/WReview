@@ -20,7 +20,7 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"myReviews", "reviewsOnMe"})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Person {
     @Id
