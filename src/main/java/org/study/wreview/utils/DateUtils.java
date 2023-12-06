@@ -1,7 +1,6 @@
 package org.study.wreview.utils;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,12 +11,11 @@ public class DateUtils {
         return calendar.getTime();
     }
 
-    public static int getDuration(Date date){
+    public static int getDuration(LocalDate date){
         if(date == null){
-            date = new java.sql.Date(System.currentTimeMillis());
+            date = LocalDate.now();
         }
-        LocalDate lDate1 = LocalDate.now();
-        LocalDate lDate2 = ((java.sql.Date)date).toLocalDate();
-        return lDate2.until(lDate1).getYears();
+        LocalDate now = LocalDate.now();
+        return date.until(now).getYears();
     }
 }

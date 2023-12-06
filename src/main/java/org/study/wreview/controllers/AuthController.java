@@ -21,6 +21,7 @@ import java.util.Arrays;
 public class AuthController {
 
     PersonService personService;
+
     PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")

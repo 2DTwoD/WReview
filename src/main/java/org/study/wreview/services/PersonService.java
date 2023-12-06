@@ -73,7 +73,7 @@ public class PersonService {
     }
 
     @Transactional
-    public void block(String name){
+    public void lock(String name){
         personRepository.findByUsername(name).ifPresent(p -> {
             p.setEnabled(!p.isEnabled());
             personRepository.save(p);

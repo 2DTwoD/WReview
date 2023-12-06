@@ -11,9 +11,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.study.wreview.utils.CurrentUserInfo;
 import org.study.wreview.utils.DateUtils;
 
-
 import java.text.DecimalFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -32,7 +31,7 @@ public class Person {
     @NotNull(message = "Поле 'дата рождения' не должно быть пустым")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    Date birthday;
+    LocalDate birthday;
 
     @NotEmpty(message = "Поле 'телефон' не должно быть пустым")
     @Size(max = 20, message = "Поле 'телефон' должно содержать не более 20 символов")
@@ -48,7 +47,7 @@ public class Person {
     @Column(name = "experience_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    Date experienceDate;
+    LocalDate experienceDate;
 
     @Min(value = 0, message = "Поле 'цена услуги' не может быть ниже 0")
     @Max(value = 1000000, message = "Поле 'цена услуги' не может быть выше 1 000 000")
@@ -73,7 +72,7 @@ public class Person {
 
     public Person(String username){
         this.username = username;
-        this.birthday = new Date(System.currentTimeMillis());
+        this.birthday = LocalDate.now();
         this.iamWorker = false;
         this.enabled = false;
         this.role = "ROLE_GUEST";

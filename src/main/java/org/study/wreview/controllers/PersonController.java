@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +25,7 @@ import java.util.Optional;
 public class PersonController implements PaginationFilterEngine {
 
     PersonService personService;
+
     PasswordEncoder passwordEncoder;
 
     @GetMapping("")
@@ -85,7 +85,7 @@ public class PersonController implements PaginationFilterEngine {
         }
         personService.findByUsername(name)
                 .filter(Person::isUser)
-                .ifPresent(p -> personService.block(name));
+                .ifPresent(p -> personService.lock(name));
         return "redirect:/persons";
     }
 

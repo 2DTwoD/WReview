@@ -8,6 +8,7 @@ import org.study.wreview.models.Person;
 
 import java.util.Collection;
 import java.util.Collections;
+
 @RequiredArgsConstructor
 public class PersonDetails implements UserDetails {
     final private Person person;

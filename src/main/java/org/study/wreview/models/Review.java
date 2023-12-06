@@ -10,7 +10,6 @@ import org.study.wreview.utils.CurrentUserInfo;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 @Data
 @Entity
 @ToString
