@@ -6,53 +6,55 @@
 </head>
 <body>
 <div id="substrate">
-<div th:replace="fragments/header :: header"></div>
-<div th:replace="fragments/filter :: filter"></div>
-<table>
-    <thead>
-    <tr>
-        <th>Время создания</th>
-        <th>Автор отзыва</th>
-        <th>Оборудование</th>
-        <th>Причина вызова</th>
-        <th>Исполнитель</th>
-        <th>Метка выполнения</th>
-        <th>Комментарий</th>
-        <th>Оценка</th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="review: ${reviews}">
-        <td th:text="${review.getBeautyTimestamp()}"></td>
-        <td th:text="${review.caller.username}"></td>
-        <td th:text="${review.getShortEquipment}"></td>
-        <td th:text="${review.getShortReason()}"></td>
-        <td th:text="${review.worker.username}"></td>
-        <td>
-            <span th:if="${review.workDone}">Да</span>
-            <span th:unless="${review.workDone}">Нет</span>
-        </td>
-        <td th:text="${review.getShortComment()}"></td>
-        <td th:text="${review.rating}"></td>
-        <td><a th:href="@{/reviews/{id}(id=${review.getId()})}"><button>Подробнее</button></a></td>
-        <td>
-            <a th:if="${review.currentUserIsCallerOrAdmin()}" th:href="@{/reviews/{id}/edit(id=${review.getId()})}">
-                <button>Изменить</button>
-            </a>
-        </td>
-    </tr>
-    <tr th:if="${reviews.isEmpty()}">
-        <td colspan="10">Нет записей</td>
-    </tr>
-    </tbody>
-</table>
-<div th:replace="fragments/pagination :: pagination"></div>
-<a th:href="@{/reviews/add}">
-    <button>Добавить отзыв</button>
-</a>
-<div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/filter :: filter"></div>
+    <table>
+        <thead>
+        <tr>
+            <th>Время создания</th>
+            <th>Автор отзыва</th>
+            <th>Оборудование</th>
+            <th>Причина вызова</th>
+            <th>Исполнитель</th>
+            <th>Метка выполнения</th>
+            <th>Комментарий</th>
+            <th>Оценка</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review: ${reviews}">
+            <td th:text="${review.getBeautyTimestamp()}"></td>
+            <td th:text="${review.caller.username}"></td>
+            <td th:text="${review.getShortEquipment}"></td>
+            <td th:text="${review.getShortReason()}"></td>
+            <td th:text="${review.worker.username}"></td>
+            <td>
+                <span th:if="${review.workDone}">Да</span>
+                <span th:unless="${review.workDone}">Нет</span>
+            </td>
+            <td th:text="${review.getShortComment()}"></td>
+            <td th:text="${review.rating}"></td>
+            <td><a th:href="@{/reviews/{id}(id=${review.getId()})}">
+                <button>Подробнее</button>
+            </a></td>
+            <td>
+                <a th:if="${review.currentUserIsCallerOrAdmin()}" th:href="@{/reviews/{id}/edit(id=${review.getId()})}">
+                    <button>Изменить</button>
+                </a>
+            </td>
+        </tr>
+        <tr th:if="${reviews == null || reviews.isEmpty()}">
+            <td colspan="10">Нет записей</td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:replace="fragments/pagination :: pagination"></div>
+    <a th:href="@{/reviews/add}">
+        <button>Добавить отзыв</button>
+    </a>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

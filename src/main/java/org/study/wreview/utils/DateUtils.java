@@ -1,14 +1,11 @@
 package org.study.wreview.utils;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class DateUtils {
-    public static Date getDateAgo(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -1);
-        return calendar.getTime();
+    public static LocalDateTime getDateTimeAgo(){
+        return LocalDateTime.now().minusYears(1);
     }
 
     public static int getDuration(LocalDate date){

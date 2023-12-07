@@ -17,6 +17,7 @@ import org.study.wreview.services.ReviewService;
 import org.study.wreview.utils.CurrentUserInfo;
 import org.study.wreview.utils.PaginationFilterEngine;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -80,7 +81,7 @@ public class ReviewController implements PaginationFilterEngine {
 
         personService.findByUsername(workerName).ifPresent(review::setWorker);
 
-        review.setTimestamp(new Date());
+        review.setTimestamp(LocalDateTime.now());
         model.addAttribute("workers", personService.findWorkers());
         return "review/add";
     }

@@ -28,7 +28,7 @@
         <span sec:authentication="principal.username" style="color: #F2F2F2"></span>
     </span>
     <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST" style="display: inline;">
-        <input type="submit" value="Выйти"  class="headerButton submitButton"/>
+        <input type="submit" value="Выйти" class="headerButton submitButton"/>
     </form>
     <a sec:authorize="isAuthenticated()" th:href="@{/persons/edit}">
         <button class="headerButton submitButton">Мои настройки</button>

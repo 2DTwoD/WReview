@@ -6,42 +6,46 @@
 </head>
 <body>
 <div id="substrate">
-<div th:replace="fragments/header :: header"></div>
-<div th:replace="fragments/filter :: filter"></div>
-<table>
-    <thead>
-    <tr>
-        <th>Имя работника</th>
-        <th>Возраст</th>
-        <th>Услуги</th>
-        <th>Телефон</th>
-        <th>Стаж</th>
-        <th>Цена услуги</th>
-        <th>Рейтинг</th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="person : ${persons}">
-        <td th:text="${person.getUsername()}"></td>
-        <td th:text="${person.getAge()}"></td>
-        <td th:text="${person.getSmallServiceDescription()}"></td>
-        <td th:text="${person.getPhone()}"></td>
-        <td th:text="${person.getExperience()}"></td>
-        <td th:text="${person.getPrice()}"></td>
-        <td th:text="${person.getStringRating()}"></td>
-        <td><a th:href="@{/persons/{name}(name=${person.getUsername()})}"><button>Подробнее</button></a></td>
-        <td><a th:if="${person.iamWorker && person.currentUserNotMe()}"
-               th:href="@{/reviews/add?workerName={name}(name=${person.getUsername()})}"><button>Написать отзыв</button></a></td>
-    </tr>
-    <tr th:if="${persons.isEmpty()}">
-        <td colspan="9">Нет записей</td>
-    </tr>
-    </tbody>
-</table>
-<div th:replace="fragments/pagination :: pagination"></div>
-<div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/filter :: filter"></div>
+    <table>
+        <thead>
+        <tr>
+            <th>Имя работника</th>
+            <th>Возраст</th>
+            <th>Услуги</th>
+            <th>Телефон</th>
+            <th>Стаж</th>
+            <th>Цена услуги</th>
+            <th>Рейтинг</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person : ${persons}">
+            <td th:text="${person.getUsername()}"></td>
+            <td th:text="${person.getAge()}"></td>
+            <td th:text="${person.getSmallServiceDescription()}"></td>
+            <td th:text="${person.getPhone()}"></td>
+            <td th:text="${person.getExperience()}"></td>
+            <td th:text="${person.getPrice()}"></td>
+            <td th:text="${person.getStringRating()}"></td>
+            <td><a th:href="@{/persons/{name}(name=${person.getUsername()})}">
+                <button>Подробнее</button>
+            </a></td>
+            <td><a th:if="${person.iamWorker && person.currentUserNotMe()}"
+                   th:href="@{/reviews/add?workerName={name}(name=${person.getUsername()})}">
+                <button>Написать отзыв</button>
+            </a></td>
+        </tr>
+        <tr th:if="${persons == null || persons.isEmpty()}">
+            <td colspan="9">Нет записей</td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:replace="fragments/pagination :: pagination"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

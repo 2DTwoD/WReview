@@ -88,9 +88,12 @@ public class Person {
     }
 
     public Double getRating(){
+        if(reviewsOnMe == null){
+            return 0.0;
+        }
         if (rating == null){
             rating = reviewsOnMe.stream()
-                    .filter(review -> review.getTimestamp().after(DateUtils.getDateAgo()))
+                    .filter(review -> review.getTimestamp().isAfter(DateUtils.getDateTimeAgo()))
                     .mapToDouble(Review::getRating).average().orElse(0.0);
         }
         return rating;
@@ -109,7 +112,7 @@ public class Person {
         }
         if(numOfCalculatedReviews == null){
             numOfCalculatedReviews = reviewsOnMe.stream()
-                    .filter(review -> review.getTimestamp().after(DateUtils.getDateAgo()))
+                    .filter(review -> review.getTimestamp().isAfter(DateUtils.getDateTimeAgo()))
                     .count();
         }
         return numOfCalculatedReviews;

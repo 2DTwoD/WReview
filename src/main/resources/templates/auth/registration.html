@@ -6,73 +6,76 @@
 </head>
 <body>
 <div id="substrate">
-<div th:replace="fragments/header :: header"></div>
-<form th:method="POST" th:action="@{/registration}" th:object="${person}">
-    <table>
-        <tbody>
-        <tr>
-            <td class="right_align"><label for="username">Мои Ф.И.О.:</label></td>
-            <td class="left_align"><input type="text" th:field="*{username}" id="username"/></td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('username')}">
-            <td colspan="2" class="error_line center_align" th:errors="*{username}"></td>
-        </tr>
+    <div th:replace="fragments/header :: header"></div>
+    <form th:method="POST" th:action="@{/registration}" th:object="${person}">
+        <table>
+            <tbody>
+            <tr>
+                <td class="right_align"><label for="username">Мои Ф.И.О.:</label></td>
+                <td class="left_align"><input type="text" th:field="*{username}" id="username"/></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('username')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{username}"></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="password">Мой пароль:</label></td>
-            <td class="left_align"><input type="password" th:field="*{password}" id="password"/></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="password">Мой пароль:</label></td>
+                <td class="left_align"><input type="password" th:field="*{password}" id="password"/></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="position">Моя дата рождения:</label></td>
-            <td class="left_align"><input type="date" th:field="*{birthday}" id="position"/></td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('birthday')}">
-            <td colspan="2" class="error_line center_align"  th:errors="*{birthday}"></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="position">Моя дата рождения:</label></td>
+                <td class="left_align"><input type="date" th:field="*{birthday}" id="position"/></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('birthday')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{birthday}"></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="phone">Мой телефон:</label></td>
-            <td class="left_align"><input type="text" th:field="*{phone}" id="phone"/></td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('phone')}">
-            <td colspan="2" class="error_line center_align"  th:errors="*{phone}"></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="phone">Мой телефон:</label></td>
+                <td class="left_align"><input type="text" th:field="*{phone}" id="phone"/></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('phone')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{phone}"></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="iAmWorker">Я предоставляю услуги:</label></td>
-            <td class="left_align"><input class="checkbox" type="checkbox" th:field="*{iamWorker}" id="iAmWorker"/></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="iAmWorker">Я предоставляю услуги:</label></td>
+                <td class="left_align"><input class="checkbox" type="checkbox" th:field="*{iamWorker}" id="iAmWorker"/>
+                </td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="serviceDescription">Описание услуг:</label></td>
-            <td class="left_align"><textarea rows="3" cols="30" th:field="*{serviceDescription}" id="serviceDescription"></textarea></td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('serviceDescription')}">
-            <td colspan="2" class="error_line center_align" th:errors="*{serviceDescription}"></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="serviceDescription">Описание услуг:</label></td>
+                <td class="left_align"><textarea rows="3" cols="30" th:field="*{serviceDescription}"
+                                                 id="serviceDescription"></textarea></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('serviceDescription')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{serviceDescription}"></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="experienceDate">Дата начала трудового стажа:</label></td>
-            <td class="left_align"><input type="date" th:field="*{experienceDate}" id="experienceDate"/></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="experienceDate">Дата начала трудового стажа:</label></td>
+                <td class="left_align"><input type="date" th:field="*{experienceDate}" id="experienceDate"/></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="price">Стоимость услуги:</label></td>
-            <td class="left_align"><input type="number" th:field="*{price}" id="price"/></td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('price')}">
-            <td colspan="2" class="error_line center_align" th:errors="*{price}"></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="price">Стоимость услуги:</label></td>
+                <td class="left_align"><input type="number" th:field="*{price}" id="price"/></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('price')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{price}"></td>
+            </tr>
 
-        <tr>
-            <td class="center_align" colspan="2"><input class="submitButton" type="submit" value="Зарегистрироваться"/></td>
-        </tr>
-        </tbody>
-    </table>
-</form>
-<div th:replace="fragments/back_button :: back_button"></div>
-<div th:replace="fragments/footer :: footer"></div>
+            <tr>
+                <td class="center_align" colspan="2"><input class="submitButton" type="submit"
+                                                            value="Зарегистрироваться"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div th:replace="fragments/back_button :: back_button"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

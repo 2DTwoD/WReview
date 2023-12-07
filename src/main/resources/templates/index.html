@@ -3,38 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Рейтинг рабочих</title>
-    <link th:href="@{css/main.css}" rel="stylesheet" />
+    <link th:href="@{css/main.css}" rel="stylesheet"/>
 </head>
 <body>
 <div id="substrate">
-<div th:replace="fragments/header :: header"></div>
-<table>
-    <thead>
-    <tr>
-        <th>Место</th>
-        <th>Имя работника</th>
-        <th>Рейтинг за год</th>
-        <th>Число отзывов за год</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="person : ${persons}">
-        <td th:text="${personStat.index + 1}"></td>
-        <td th:text="${person.getUsername()}"></td>
-        <td th:text="${person.getStringRating()}"></td>
-        <td th:text="${person.getNumOfCalcReviews()}"></td>
-        <td><a th:href="@{/persons/{name}(name=${person.getUsername()})}"><button>Подробнее</button></a></td>
-    </tr>
-    <tr th:if="${persons.isEmpty()}">
-        <td colspan="5">Нет записей</td>
-    </tr>
-    </tbody>
-</table>
-<div>
-    <img src="/img/pedestal.png" alt="" id="pedestal">
-</div>
-<div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/header :: header"></div>
+    <table>
+        <thead>
+        <tr>
+            <th>Место</th>
+            <th>Имя работника</th>
+            <th>Рейтинг за год</th>
+            <th>Число отзывов за год</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person : ${persons}">
+            <td th:text="${personStat.index + 1}"></td>
+            <td th:text="${person.getUsername()}"></td>
+            <td th:text="${person.getStringRating()}"></td>
+            <td th:text="${person.getNumOfCalcReviews()}"></td>
+            <td><a th:href="@{/persons/{name}(name=${person.getUsername()})}">
+                <button>Подробнее</button>
+            </a></td>
+        </tr>
+        <tr th:if="${persons == null || persons.isEmpty()}">
+            <td colspan="5">Нет записей</td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <img src="/img/pedestal.png" alt="" id="pedestal">
+    </div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

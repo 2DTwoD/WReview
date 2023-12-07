@@ -7,8 +7,8 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.study.wreview.utils.CurrentUserInfo;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Entity
@@ -23,7 +23,7 @@ public class Review {
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
-    Date timestamp;
+    LocalDateTime timestamp;
 
     @ManyToOne
     @JoinColumn(name = "caller", referencedColumnName = "username")
@@ -53,7 +53,7 @@ public class Review {
     Integer rating;
 
     public String getBeautyTimestamp(){
-        return new SimpleDateFormat("dd.MM.yyyy HH:mm").format(getTimestamp());
+        return getTimestamp().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
     }
 
     public String getShortComment(){

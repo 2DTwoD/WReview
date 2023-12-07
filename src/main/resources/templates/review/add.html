@@ -6,80 +6,82 @@
 </head>
 <body>
 <div id="substrate">
-<div th:replace="fragments/header :: header"></div>
-<form th:method="POST" th:action="@{/reviews}" th:object="${review}">
-    <table>
-        <tbody>
-        <tr>
-            <td class="right_align"><label for="caller">Заказчик:</label></td>
-            <td class="left_align"><input type="text" th:field="*{caller.username}" id="caller" readonly/></td>
-        </tr>
+    <div th:replace="fragments/header :: header"></div>
+    <form th:method="POST" th:action="@{/reviews}" th:object="${review}">
+        <table>
+            <tbody>
+            <tr>
+                <td class="right_align"><label for="caller">Заказчик:</label></td>
+                <td class="left_align"><input type="text" th:field="*{caller.username}" id="caller" readonly/></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="timestamp">Дата оформления отзыва:</label></td>
-            <td class="left_align"><input type="text" th:field="*{timestamp}" id="timestamp" readonly/></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="timestamp">Дата оформления отзыва:</label></td>
+                <td class="left_align"><input type="text" th:field="*{timestamp}" id="timestamp" readonly/></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="equipment">Название оборудования:</label></td>
-            <td class="left_align"><input type="text" th:field="*{equipment}" id="equipment"/></td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('equipment')}">
-            <td colspan="2" class="error_line center_align" th:errors="*{equipment}"></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="equipment">Название оборудования:</label></td>
+                <td class="left_align"><input type="text" th:field="*{equipment}" id="equipment"/></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('equipment')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{equipment}"></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="reason">Причина вызова:</label></td>
-            <td class="left_align"><textarea rows="5" cols="30" th:field="*{reason}" id="reason"></textarea></td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('reason')}">
-            <td colspan="2" class="error_line center_align" th:errors="*{reason}"></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="reason">Причина вызова:</label></td>
+                <td class="left_align"><textarea rows="5" cols="30" th:field="*{reason}" id="reason"></textarea></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('reason')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{reason}"></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="worker">Имя рабочего:</label></td>
-            <td class="left_align">
-                <input type="text" list="worker_list" id="worker" th:field="*{worker.username}">
-                <datalist id="worker_list">
-                    <option th:each="w: ${workers}" th:text="${w.username}">
-                </datalist>
-            </td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('worker.username')}">
-            <td colspan="2" class="error_line center_align" th:errors="*{worker.username}"></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="worker">Имя рабочего:</label></td>
+                <td class="left_align">
+                    <input type="text" list="worker_list" id="worker" th:field="*{worker.username}">
+                    <datalist id="worker_list">
+                        <option th:each="w: ${workers}" th:text="${w.username}">
+                    </datalist>
+                </td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('worker.username')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{worker.username}"></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="workDone">Работа выполнена:</label></td>
-            <td class="left_align"><input class="checkbox" type="checkbox" th:field="*{workDone}" id="workDone"/></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="workDone">Работа выполнена:</label></td>
+                <td class="left_align"><input class="checkbox" type="checkbox" th:field="*{workDone}" id="workDone"/>
+                </td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="comment">Комментарий:</label></td>
-            <td class="left_align"><textarea rows="5" cols="30" th:field="*{comment}" id="comment"></textarea></td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('comment')}">
-            <td colspan="2" class="error_line center_align" th:errors="*{comment}"></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="comment">Комментарий:</label></td>
+                <td class="left_align"><textarea rows="5" cols="30" th:field="*{comment}" id="comment"></textarea></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('comment')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{comment}"></td>
+            </tr>
 
-        <tr>
-            <td class="right_align"><label for="rating">Оценка рабочего:</label></td>
-            <td class="left_align"><input type="number" id="rating" th:field="*{rating}"></td>
-        </tr>
-        <tr th:if="${#fields.hasErrors('rating')}">
-            <td colspan="2" class="error_line center_align" th:errors="*{rating}"></td>
-        </tr>
+            <tr>
+                <td class="right_align"><label for="rating">Оценка рабочего:</label></td>
+                <td class="left_align"><input type="number" id="rating" th:field="*{rating}"></td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('rating')}">
+                <td colspan="2" class="error_line center_align" th:errors="*{rating}"></td>
+            </tr>
 
-        <tr>
-            <td colspan="2">
-                <input class="submitButton center_align" type="submit" value="Добавить отзыв" onclick="return confirm('Добавить отзыв?')"/>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</form>
-<div th:replace="fragments/back_button :: back_button"></div>
-<div th:replace="fragments/footer :: footer"></div>
+            <tr>
+                <td colspan="2">
+                    <input class="submitButton center_align" type="submit" value="Добавить отзыв"
+                           onclick="return confirm('Добавить отзыв?')"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div th:replace="fragments/back_button :: back_button"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

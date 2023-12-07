@@ -6,7 +6,7 @@
 </head>
 <body>
 <div id="substrate">
-<div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header"></div>
     <form th:method="PATCH" th:action="@{/persons/edit}" th:object="${person}">
         <table>
             <tbody>
@@ -23,7 +23,7 @@
                 <td class="left_align"><input type="date" th:field="*{birthday}" id="position"/></td>
             </tr>
             <tr th:if="${#fields.hasErrors('birthday')}">
-                <td colspan="2" class="error_line center_align"  th:errors="*{birthday}"></td>
+                <td colspan="2" class="error_line center_align" th:errors="*{birthday}"></td>
             </tr>
 
             <tr>
@@ -31,17 +31,19 @@
                 <td class="left_align"><input type="text" th:field="*{phone}" id="phone"/></td>
             </tr>
             <tr th:if="${#fields.hasErrors('phone')}">
-                <td colspan="2" class="error_line center_align"  th:errors="*{phone}"></td>
+                <td colspan="2" class="error_line center_align" th:errors="*{phone}"></td>
             </tr>
 
             <tr>
                 <td class="right_align"><label for="iAmWorker">Я предоставляю услуги:</label></td>
-                <td class="left_align"><input class="checkbox" type="checkbox" th:field="*{iamWorker}" id="iAmWorker"/></td>
+                <td class="left_align"><input class="checkbox" type="checkbox" th:field="*{iamWorker}" id="iAmWorker"/>
+                </td>
             </tr>
 
             <tr>
                 <td class="right_align"><label for="serviceDescription">Описание услуг:</label></td>
-                <td class="left_align"><textarea rows="3" cols="30" th:field="*{serviceDescription}" id="serviceDescription"></textarea></td>
+                <td class="left_align"><textarea rows="3" cols="30" th:field="*{serviceDescription}"
+                                                 id="serviceDescription"></textarea></td>
             </tr>
             <tr th:if="${#fields.hasErrors('serviceDescription')}">
                 <td colspan="2" class="error_line center_align" th:errors="*{serviceDescription}"></td>
@@ -62,7 +64,8 @@
 
             <tr>
                 <td class="center_align" colspan="2">
-                    <input class="submitButton" type="submit" value="Сохранить" onclick="return confirm('Сохранить изменения?')"/>
+                    <input class="submitButton" type="submit" value="Сохранить"
+                           onclick="return confirm('Сохранить изменения?')"/>
                 </td>
             </tr>
             </tbody>
@@ -71,8 +74,8 @@
     <a th:href="@{/persons/edit_pass}">
         <button>Изменить пароль</button>
     </a>
-<div th:replace="fragments/back_button :: back_button"></div>
-<div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/back_button :: back_button"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

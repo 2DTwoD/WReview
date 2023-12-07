@@ -13,54 +13,56 @@
 </head>
 <body>
 <div id="substrate">
-<div th:replace="fragments/header :: header"></div>
-<table>
-    <tbody>
-    <tr>
-        <td class="right_align">Имя:</td>
-        <td class="left_align" th:text="${person.getUsername()}"></td>
-    </tr>
-    <tr>
-        <td class="right_align">Возраст:</td>
-        <td class="left_align" th:text="${person.getAge()}"></td>
-    </tr>
-    <tr>
-        <td class="right_align">Описание услуги:</td>
-        <td class="left_align" th:text="${person.getServiceDescription()}"></td>
-    </tr>
-    <tr>
-        <td class="right_align">Стаж:</td>
-        <td class="left_align" th:text="${person.getExperience()}"></td>
-    </tr>
-    <tr>
-        <td class="right_align">Телефон:</td>
-        <td class="left_align" th:text="${person.getPhone()}"></td>
-    </tr>
-    <tr>
-        <td class="right_align">Цена услуги:</td>
-        <td class="left_align" th:text="${person.getPrice()}"></td>
-    </tr>
-    <tr>
-        <td class="right_align">Рейтинг:</td>
-        <td class="left_align" th:text="${person.getStringRating()}"></td>
-    </tr>
-    <tr sec:authorize="hasRole('ADMIN')">
-        <td class="right_align">Разрешен:</td>
-        <td class="left_align" th:text="${person.isEnabled()}"></td>
-    </tr>
-    </tbody>
-</table>
-<a th:if="${person.iamWorker && person.currentUserNotMe()}" sec:authorize="isAuthenticated()" th:href="@{/reviews/add?workerName={name}(name=${person.getUsername()})}">
-    <button>Написать отзыв</button>
-</a>
-<form sec:authorize="hasRole('ADMIN')" th:method="DELETE" th:action="@{/persons/{name}(name=${person.username})}">
-    <input class="submitButton" type="submit" value="Удалить" onclick="return confirm('Удалить пользователя?')"/>
-</form>
-<form sec:authorize="hasRole('ADMIN')" th:method="PATCH" th:action="@{/persons/{name}/lock(name=${person.username})}">
-    <input class="submitButton" type="submit" value="Запретить/разрешить" onclick="return confirm('Вы уверены?')"/>
-</form>
-<div th:replace="fragments/back_button :: back_button"></div>
-<div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/header :: header"></div>
+    <table>
+        <tbody>
+        <tr>
+            <td class="right_align">Имя:</td>
+            <td class="left_align" th:text="${person.getUsername()}"></td>
+        </tr>
+        <tr>
+            <td class="right_align">Возраст:</td>
+            <td class="left_align" th:text="${person.getAge()}"></td>
+        </tr>
+        <tr>
+            <td class="right_align">Описание услуги:</td>
+            <td class="left_align" th:text="${person.getServiceDescription()}"></td>
+        </tr>
+        <tr>
+            <td class="right_align">Стаж:</td>
+            <td class="left_align" th:text="${person.getExperience()}"></td>
+        </tr>
+        <tr>
+            <td class="right_align">Телефон:</td>
+            <td class="left_align" th:text="${person.getPhone()}"></td>
+        </tr>
+        <tr>
+            <td class="right_align">Цена услуги:</td>
+            <td class="left_align" th:text="${person.getPrice()}"></td>
+        </tr>
+        <tr>
+            <td class="right_align">Рейтинг:</td>
+            <td class="left_align" th:text="${person.getStringRating()}"></td>
+        </tr>
+        <tr sec:authorize="hasRole('ADMIN')">
+            <td class="right_align">Разрешен:</td>
+            <td class="left_align" th:text="${person.isEnabled()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:if="${person.iamWorker && person.currentUserNotMe()}" sec:authorize="isAuthenticated()"
+       th:href="@{/reviews/add?workerName={name}(name=${person.getUsername()})}">
+        <button>Написать отзыв</button>
+    </a>
+    <form sec:authorize="hasRole('ADMIN')" th:method="DELETE" th:action="@{/persons/{name}(name=${person.username})}">
+        <input class="submitButton" type="submit" value="Удалить" onclick="return confirm('Удалить пользователя?')"/>
+    </form>
+    <form sec:authorize="hasRole('ADMIN')" th:method="PATCH"
+          th:action="@{/persons/{name}/lock(name=${person.username})}">
+        <input class="submitButton" type="submit" value="Запретить/разрешить" onclick="return confirm('Вы уверены?')"/>
+    </form>
+    <div th:replace="fragments/back_button :: back_button"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

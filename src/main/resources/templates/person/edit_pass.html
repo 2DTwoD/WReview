@@ -7,7 +7,7 @@
 </head>
 <body>
 <div id="substrate">
-<div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header"></div>
     <form th:method="PATCH" th:action="@{/persons/edit_pass}" th:object="${password}">
         <table>
             <tbody>
@@ -41,14 +41,15 @@
 
             <tr>
                 <td colspan="2" class="center_align">
-                    <input class="submitButton" type="submit" value="Изменить" onclick="return confirm('Сохранить изменения?')"/>
+                    <input class="submitButton" type="submit" value="Изменить"
+                           onclick="return confirm('Сохранить изменения?')"/>
                 </td>
             </tr>
             </tbody>
         </table>
     </form>
-<div th:replace="fragments/back_button :: back_button"></div>
-<div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/back_button :: back_button"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 </div>
 </body>
 </html>

@@ -36,7 +36,7 @@ public interface PaginationFilterEngine {
 
         Page<T> page = function.apply(pages, queryFilter);
 
-        int totalPage = page.getTotalPages() - 1;
+        int totalPage = page == null? 0: page.getTotalPages() - 1;
 
         pageNum = Math.max(0, Math.min(totalPage, pageNum));
 

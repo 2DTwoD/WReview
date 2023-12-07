@@ -11,6 +11,7 @@ import org.study.wreview.config.WebSecurityConfig;
 import org.study.wreview.services.PersonService;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -30,6 +31,20 @@ class AuthControllerTest {
 
 
     @Test
+    public void loginPageTest() throws Exception {
+        mockMvc
+                .perform(get("/login"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void registrationPageTest() throws Exception {
+        mockMvc
+                .perform(get("/registration").with(user("user")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void accessDeniedTest() throws Exception {
         mockMvc
                 .perform(get("/reviews"))
@@ -41,7 +56,8 @@ class AuthControllerTest {
         mockMvc
                 .perform(formLogin()
                         .loginProcessingUrl("/process_login")
-                        .user("user"))
+                        .user("user")
+                        .password("1"))
                 .andExpect(authenticated()
                         .withUsername("user")
                         .withRoles("USER"))
